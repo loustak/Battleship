@@ -6,8 +6,6 @@ public class Coord {
     private static Coord minCoord = new Coord(minCoordString, true);
     private static Coord maxCoord = new Coord(maxCoordString, true);
 
-
-
     static public Coord getMinCoord() {
         return minCoord;
     }
