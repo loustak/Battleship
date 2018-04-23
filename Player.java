@@ -5,11 +5,13 @@ class Player {
 
     private int number;
     private int[] shipSize;
+    private Map map;
 	private ArrayList<Ship> fleet;
 
     public Player(int number, int[] shipSize) {
         this.number = number;
         this.shipSize = shipSize;
+        map = new Map();
         fleet = new ArrayList<Ship>();
     }
 
@@ -68,6 +70,8 @@ class Player {
         }
 
         fleet.add(ship);
+        map.addShip(ship);
+        map.draw();
     }
 
     public Ship shipCollide(Ship shipToTest) {

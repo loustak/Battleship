@@ -19,7 +19,11 @@ public class Map {
 
 	public void addShip(Ship ship) {
 		Coord[] coords = ship.getCoords();
-
+		for (Coord coord : coords) {
+			int x = coord.getCoord1() - Coord.getMinCoord().getCoord1();
+			int y = coord.getCoord2() - Coord.getMinCoord().getCoord2();
+			map[x][y] = MapData.SHIP;
+		}
 	}
 
 	public void draw() {
