@@ -1,8 +1,12 @@
 
 public class Coord {
 
-    private static Coord minCoord = new Coord("A1");
-    private static Coord maxCoord = new Coord("J10");
+    private static String minCoordString = "A1";
+    private static String maxCoordString = "J10";
+    private static Coord minCoord = new Coord(minCoordString, true);
+    private static Coord maxCoord = new Coord(maxCoordString, true);
+
+
 
     static public Coord getMinCoord() {
         return minCoord;
@@ -16,28 +20,32 @@ public class Coord {
     private int coord2;
     private boolean hit = false;
 
-    public Coord() { 
-
-    }
-
     public Coord(String coord) throws java.lang.Exception {
         int length = coord.length();
-        if (length <= minCoord.toString().length() || length > maxCoord.toString().length()) {
-            throw new Exception("Coordonnée invalide");
+        if (length < getMinCoord().toString().length() || length > getMaxCoord().toString().length()) {
+            throw new Exception(coord + ": length is invalid.");
         }
 
         try {
-            coord1 = (int) coord.charAt(0);
-            String secondPart = coord.substring(1);
-            coord2 = Integer.parseInt(secondPart);   
+            extractCoords(coord);
         } catch (Exception e) {
-            throw new Exception("Type des coordonnées invalide");
+            throw new Exception(coord + ": type is invalid.");
         }
 
-        if (coord1 >= minCoord.coord1 && coord2 >= minCoord.coord2 && 
-            coord1 <= maxCoord.coord1 && coord2 <= maxCoord.coord2) {
-            throw new Exception("Coordonnées hors de la grille");
+        if (coord1 < getMinCoord().coord1 || coord2 < getMinCoord().coord2 ||
+            coord1 > getMaxCoord().coord1 || coord2 > getMaxCoord().coord2) {
+            throw new Exception(coord + ": out of the grid.");
         }
+    }
+
+    private Coord(String coord, boolean unsafe) {
+        extractCoords(coord);
+    }
+
+    private void extractCoords(String coord) {
+        coord1 = (int) coord.toUpperCase().charAt(0);
+        String secondPart = coord.substring(1);
+        coord2 = Integer.parseInt(secondPart); 
     }
 
     public Coord(int coord1, int coord2) {

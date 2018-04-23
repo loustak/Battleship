@@ -1,13 +1,14 @@
 
 public class Game {
 
+    private int[] shipSize = {5, 4, 3, 3, 2};
 	private Player player1;
 	private Player player2;
 
     public Game() {
         System.out.println("Game start, the grid is " + Coord.getMinCoord() + " to " + Coord.getMaxCoord() + ".");
-        player1 = new Player(1);
-        player2 = new Player(2);
+        player1 = new Player(1, shipSize);
+        player2 = new Player(2, shipSize);
 
         player1.askFleet();
         player2.askFleet();
