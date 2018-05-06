@@ -14,6 +14,7 @@ public class Game {
         player2.askFleet();
     }
 
+    /*
     public void loop() {
         while (true) {
             player1.fire(player2);
@@ -28,4 +29,5 @@ public class Game {
             }
         }
     }
+    */
 }

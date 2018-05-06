@@ -1,18 +1,28 @@
 
+/**
+ * A ship is a collection of coordinates
+ */
 public class Ship {
 
-    private Coord start;
-    private Coord end;
+    // Coord array representing the positions of the ship
     private Coord[] coords;
 
-    public Ship(String startCoord, String endCoord) throws java.lang.Exception {
-        this.start = new Coord(startCoord);
-        this.end = new Coord(endCoord);
+    /**
+     * @param startCoord a String indicating the start coordinate of the ship
+     * @param endCoord a String indicating the end coordinate of the ship
+     * @throws CoordException [description]
+     */
+    public Ship(String startCoord, String endCoord) throws CoordException, ShipException {
+        // Try to convert String coord to real Coordinate
+        Coord start = new Coord(startCoord);
+        Coord end = new Coord(endCoord);
 
-        boolean isHorizontal = horizontal();
+        boolean isHorizontal = isHorizontal();
         int length = length(isHorizontal);
 
+        // Construct the coords array, length can be vertical if the ship is placed backward
         coords = new Coord[Math.abs(length) + 1];
+
         // Add all the intermediates coords in the array
         for (int i = 0; i < coords.length; i++) {
             // Math.signum return the sign of the variable
@@ -26,17 +36,47 @@ public class Ship {
         }
     }
 
-    private boolean horizontal() throws java.lang.Exception {
+    /**
+     * @return the start Coord of the ship
+     */
+    private Coord getStartCoord() {
+        return coords[0];
+    }
+
+    /**
+     * @return the end Coord of the ship
+     */
+    private Coord getEndCoord() {
+        return coords[coords.length];
+    }
+
+    /**
+     * @return a boolean set to true if the ship is horizontal and to false if it is vertical
+     * @throws ShipExceptionHorizontal an exception saying that the 
+     * ship must be either vertical or horizontal
+     */
+    private boolean isHorizontal() throws ShipExceptionHorizontal {
+        Coord start = getStartCoord();
+        Coord end = getEndCoord();
+
         if (start.getCoord2() == end.getCoord2() && start.getCoord1() != end.getCoord1()) {
             return true;
         } else if (start.getCoord1() == end.getCoord1() && start.getCoord2() != end.getCoord2()) {
             return false;
         } else {
-            throw new Exception("The ship is neither horizontal nor vertical.");
+            throw new ShipExceptionHorizontal();
         }
     }
 
-    private int length(boolean isHorizontal) throws java.lang.Exception {
+    /**
+     * @param isHorizontal is a boolean set to true if the ship is placed horizontally 
+     * and set to false if the ship is placed vertically
+     * @return the length of the ship
+     */
+    private int length(boolean isHorizontal) {
+        Coord start = getStartCoord();
+        Coord end = getEndCoord();
+
         if (isHorizontal) {
             return end.getCoord1() - start.getCoord1();
         } else {
@@ -44,10 +84,16 @@ public class Ship {
         }
     }
 
+    /**
+     * @return an array of Coord
+     */
     public Coord[] getCoords() {
         return coords;
     }
 
+    /**
+     * @param coord is the Coordinate to shoot at
+     */
     public void shoot(Coord coord) {
         for (int i = 0; i < coords.length; i++) {
             if (coords[i].equals(coord)) {
@@ -56,28 +102,41 @@ public class Ship {
         }
     }
 
-    public boolean isHit(String missileCoord) {
-        // Return true if the missile touched this ship, else false
+    /**
+     * @param missileCoord is a String representing the coordinate to check
+     * @return a boolean set to true if the missile touched this ship, else return false
+     */
+    public boolean isHit(String missileCoord) throws CoordException {
+        Coord coord = new Coord(missileCoord);
+
         for (int i = 0; i < coords.length; i++) {
-            if (coords[i].toString().equals(missileCoord)) {
+            if (coords[i].equals(coord)) {
                 return true;
             }
         }
         return false;
     }
 
-    public boolean hit(String missileCoord) {
-        // Hit the ship at the designated coord
+    /**
+     * Hit the ship at the designated coordinate
+     * @param missileCoord is the coordinate to hit
+     * @return a boolean set to true if the ship as sink, else return false
+     */
+    public boolean hit(String missileCoord) throws CoordException {
+        Coord coord = new Coord(missileCoord);
+
         for (int i = 0; i < coords.length; i++) {
-            if (coords[i].toString().equals(missileCoord)) {
+            if (coords[i].equals(coord)) {
                 coords[i].setHit();
             }
         }
         return isDestroyed();
     }
 
+    /**
+     * @return a boolean set to true if the ship as sink, else return false
+     */
     public boolean isDestroyed() {
-        // Return true if the ship has sink, else return false
         for (int i = 0; i < coords.length; i++) {
             if (!coords[i].isHit()) {
                 return false;
@@ -86,6 +145,27 @@ public class Ship {
         return true;
     }
 
+    /**
+     * @param ship is the ship to test
+     * @return a boolean set to true if the ship collide with any other ship, else return false
+     */
+    public boolean collide(Ship ship) {
+        // For each of the ship coords
+        for (Coord thisCoord : this.getCoords()) {
+            // Check if any is equals to the other ship coord
+            for (Coord otherCoord : ship.getCoords()) {
+                if (thisCoord.equals(otherCoord)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @return a String representation of the ship composed of all it's coordinates
+     */
     public String toString() {
         String str = "";
         for (int i = 0; i < coords.length; i++) {
