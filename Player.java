@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * The abstract player class
  */
-class Player {
+abstract class Player {
 
     private int number;
     private ArrayList<Ship> fleet;
@@ -13,6 +13,12 @@ class Player {
     public Player(int number) {
         this.number = number;
     }
+
+    /**
+     * Place all the ships one by one
+     * @param shipSizes are the differents ships sizes to place
+     */
+    abstract void placeFleet(int[] shipSizes);
 
     /**
      * @param startCoord is a String representing the start coordinate of the ship

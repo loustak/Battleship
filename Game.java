@@ -10,8 +10,10 @@ public class Game {
         player1 = new Player(1, shipSize);
         player2 = new Player(2, shipSize);
 
+        /*
         player1.askFleet();
         player2.askFleet();
+        */
     }
 
     /*
