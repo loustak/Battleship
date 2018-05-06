@@ -1,5 +1,5 @@
 
-public enum MapData {
+public enum GridData {
 	WATER,
 	SHIP,
 	FIRED,

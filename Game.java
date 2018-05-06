@@ -1,35 +1,46 @@
 
 public class Game {
 
-    private int[] shipSize = {5, 4, 3, 3, 2};
+    private int[] shipSize = {/*5, 4, 3, 3, */2};
 	private Player player1;
 	private Player player2;
 
     public Game() {
         System.out.println("Game start, the grid is " + Coord.getMinCoord() + " to " + Coord.getMaxCoord() + ".");
-        player1 = new Player(1, shipSize);
-        player2 = new Player(2, shipSize);
+        player1 = new HumanPlayer();
+        player2 = new HumanPlayer();
 
-        /*
-        player1.askFleet();
-        player2.askFleet();
-        */
+        System.out.println();
+
+        System.out.println(player1.getName() + " place your ships:");
+        player1.placeFleet(shipSize);
+        System.out.println(player2.getName() + " place your ships:");
+        player2.placeFleet(shipSize);
     }
 
-    /*
     public void loop() {
         while (true) {
-            player1.fire(player2);
+            /* Player 1 part */
+            System.out.println(player1.getName() + " your turn:");
+            player1.drawGrid();
+            player1.shoot(player2);
+
             if (player2.lost()) {
-                System.out.println("Player 1 win !");
+                System.out.println(player1.getName() + " win !");
                 break;
             }
-            player2.fire(player1);
+
+            /* Player 2 part */
+            System.out.println("============================");
+            System.out.println(player2.getName() + " your turn:");
+            player2.drawGrid();
+            player2.shoot(player1);
+
             if (player1.lost()) {
-                System.out.println("Player 2 win !");
+                System.out.println(player2.getName() + " win !");
                 break;
             }
+            System.out.println("============================");
         }
     }
-    */
 }

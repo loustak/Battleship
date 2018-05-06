@@ -6,18 +6,13 @@ public class Coord {
 
     private static String minCoordString = "A1";
     private static String maxCoordString = "J10";
-    private static Coord minCoord;
-    private static Coord maxCoord;
+    private static Coord minCoord = new Coord(minCoordString, true);
+    private static Coord maxCoord = new Coord(maxCoordString, true);
 
     /**
      * @return The first coordinate of the game as a Coord object
      */
     static public Coord getMinCoord() {
-        if (minCoord == null) {
-            try {
-                minCoord = new Coord(minCoordString);
-            } catch (CoordException e) { }
-        }
         return minCoord;
     }
 
@@ -25,16 +20,11 @@ public class Coord {
      * @return The last coordinate of the game as a Coord object
      */
     static public Coord getMaxCoord() {
-        if (maxCoord == null) {
-            try {
-                maxCoord = new Coord(maxCoordString);
-            } catch (CoordException e) { }
-        }
         return maxCoord;
     }
 
-    private int coord1;
-    private int coord2;
+    private int coord1; // The letter part
+    private int coord2; // The number part
     private boolean hit = false;
 
     /**
@@ -60,6 +50,14 @@ public class Coord {
             coord1 > getMaxCoord().coord1 || coord2 > getMaxCoord().coord2) {
             throw new CoordExceptionInvalidRange(coord);
         }
+    }
+
+    /**
+     * @param a String representing the coordinate to create
+     * @param a boolean used to say that this method is unsafe and is only used internally
+     */
+    private Coord(String coord, boolean unsafe) {
+        extractCoords(coord);
     }
 
     /**
