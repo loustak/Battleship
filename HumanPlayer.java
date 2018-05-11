@@ -20,12 +20,11 @@ class HumanPlayer extends Player {
      */
     @Override
     public void placeFleet(int[] shipSizes) {
-        drawGrid();
+        System.out.println(this);
         for (int size : shipSizes) {
             placeShipTUI(size);
-            drawGrid();
+            System.out.println(this);
         }
-        grid.empty();
 
         System.out.println("");
         System.out.println("");

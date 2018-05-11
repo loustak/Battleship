@@ -7,13 +7,16 @@ import java.util.ArrayList;
  */
 abstract class Player {
 
-    protected String name; // Player name
+    // Player name
+    protected String name;
+    // All the ship of the player
     protected ArrayList<Ship> fleet;
-    protected Grid grid; // Every player have a grid just in case if we want to see the AI's grid
+    // A list of all the coords the player have fired at
+    protected ArrayList<Coord> fired;
 
     public Player() {
         fleet = new ArrayList<Ship>();
-        grid = new Grid();
+        fired = new ArrayList<Coord>();
     }
 
     /**
@@ -44,10 +47,7 @@ abstract class Player {
         if (Math.abs(ship.getCoords().length) != size) {
             throw new ShipExceptionSize(size);
         }
-        // Add the ship to the fleet
         fleet.add(ship);
-        // Update the grid
-        grid.addShip(ship);
     }
 
     /**
@@ -82,14 +82,18 @@ abstract class Player {
      */
     protected Ship shipHit(Player ennemy, String missileCoordString) throws CoordException {
         Coord missileCoord = new Coord(missileCoordString);
+        Ship shipToReturn = null;
+
         for (Ship ship : ennemy.getFleet()) {
             if (ship.hit(missileCoord)) {
-                grid.addShoot(missileCoord, true);
-                return ship;
+                // The shoot have touched something
+                missileCoord.setHit();
+                shipToReturn = ship;
+                break;
             }
         }
-        grid.addShoot(missileCoord, false);
-        return null;
+        fired.add(missileCoord);
+        return shipToReturn;
     }
 
     /**
@@ -105,9 +109,106 @@ abstract class Player {
     }
 
     /**
-     * Display the player's grid
+     * @param n is an int corresponding to the number of "space" character to draw
+     * @return a String composed of n spaces
      */
-    public void drawGrid() {
-        grid.draw();
+    private String addSpace(int n) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < n; i++) {
+            stringBuilder.append(" ");
+        }
+        return stringBuilder.toString();
+    }
+
+    /**
+     * @param  coord is a Coord object representing the coord to check 
+     * @return a Coord object if there was a shoot at coord, else return null
+     */
+    private Coord firedAt(Coord coord) {
+        for (Coord coordInList : fired) {
+            if (coord.equals(coordInList)) {
+                return coordInList;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * @param  coord is a Coord object representing the coord to check 
+     * @return a boolean set to true if there is a ship at the coord position, else return false
+     */
+    private boolean shipAt(Coord coord) {
+        for (Ship ship : fleet) {
+            for (Coord coordInShip : ship.getCoords()) {
+                if (coordInShip.equals(coord)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @return a string representing the player's grid
+     */
+    public String toString() {
+        Coord minCoord = Coord.getMinCoord();
+        Coord maxCoord = Coord.getMaxCoord();
+        // Will be used to move inside the grid
+        Coord currentCoord;
+
+        // Compute the width & height of the grid
+        int width = maxCoord.getCoord1() - minCoord.getCoord1() + 1;
+        int height = maxCoord.getCoord2() - minCoord.getCoord2() + 1;
+        // Get the starting letter of the grid
+        int minLetter = minCoord.getCoord1();
+        // Get the starting number of the grid
+        int minNumber = minCoord.getCoord2();
+        // Compute the maximum length of a coordinate as a string, 
+        // to properly align the grid
+        int maxCoordStringLength = String.valueOf(maxCoord.getCoord2()).length();
+
+        String numberString;
+        StringBuilder stringBuilder = new StringBuilder();
+
+        // Draw the letter coords line
+        stringBuilder.append(addSpace(maxCoordStringLength + 1));
+        for (int i = 0; i < width; i++) {
+            stringBuilder.append(String.valueOf((char)(minLetter + i)));
+            stringBuilder.append(" ");
+        }
+        stringBuilder.append("\n");
+
+        // Draw the rest of the grid
+        for (int i = 0; i < height; i++) {
+            numberString = Integer.toString(minNumber + i);
+            // Add the current number
+            stringBuilder.append(numberString);
+            // Add enough spaces to align correctly the grid
+            stringBuilder.append(addSpace(maxCoordStringLength - numberString.length() + 1));
+
+            for (int j = 0; j < width; j++) {
+                // Recompute the new coordinates
+                currentCoord = new Coord((char)(minLetter + j), i + 1);
+
+                Coord fired = firedAt(currentCoord);
+                if (fired != null) {
+                    if (fired.isHit()) {
+                        stringBuilder.append("x");
+                    } else {
+                        stringBuilder.append("*");
+                    }
+                }
+                if (shipAt(currentCoord)) {
+                    stringBuilder.append("o");
+                } else {
+                    stringBuilder.append(".");
+                }
+
+                stringBuilder.append(" ");
+            }
+            stringBuilder.append("\n");
+        }
+        return stringBuilder.toString();
     }
 }

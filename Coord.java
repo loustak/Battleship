@@ -6,8 +6,8 @@ public class Coord {
 
     private static String minCoordString = "A1";
     private static String maxCoordString = "J10";
-    private static Coord minCoord = new Coord(minCoordString, true);
-    private static Coord maxCoord = new Coord(maxCoordString, true);
+    private static Coord minCoord = new Coord(getCoord1FromString(minCoordString), getCoord2FromString(minCoordString));
+    private static Coord maxCoord = new Coord(getCoord1FromString(maxCoordString), getCoord2FromString(maxCoordString));
 
     /**
      * @return The first coordinate of the game as a Coord object
@@ -40,7 +40,8 @@ public class Coord {
 
         try {
             // Try to get the two components of the coordinate
-            extractCoords(coord);
+            coord1 = getCoord1FromString(coord);
+            coord2 = getCoord2FromString(coord);
         } catch (Exception e) {
             throw new CoordExceptionInvalidType(coord);
         }
@@ -57,7 +58,8 @@ public class Coord {
      * @param a boolean used to say that this method is unsafe and is only used internally
      */
     private Coord(String coord, boolean unsafe) {
-        extractCoords(coord);
+        coord1 = getCoord1FromString(coord);
+        coord2 = getCoord2FromString(coord);
     }
 
     /**
@@ -71,13 +73,20 @@ public class Coord {
     }
 
     /**
-     * Transform a string coordinate in two integer part 
+     * Get the first part of a String coordinate as an int
      * @param coord The coordinate to decompose
      */
-    private void extractCoords(String coord) {
-        coord1 = (int) coord.toUpperCase().charAt(0);
+    private static int getCoord1FromString(String coord) {
+        return (int) coord.toUpperCase().charAt(0);
+    }
+
+    /**
+     * Get the second part of a String coordinate as an int
+     * @param coord The coordinate to decompose
+     */
+    private static int getCoord2FromString(String coord) {
         String secondPart = coord.substring(1);
-        coord2 = Integer.parseInt(secondPart); 
+        return Integer.parseInt(secondPart); 
     }
 
     /**

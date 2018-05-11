@@ -37,7 +37,7 @@ public class Ship {
     }
 
     /**
-     * @return a boolean set to true if the ship is horizontal and to false if it is vertical
+     * @return a boolean set to true if the ship is horizontal and to false if it's vertical
      * @throws ShipExceptionHorizontal an exception saying that the 
      * ship must be either vertical or horizontal
      */

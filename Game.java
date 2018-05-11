@@ -22,7 +22,7 @@ public class Game {
         while (true) {
             /* Player 1 part */
             System.out.println(player1.getName() + " your turn:");
-            player1.drawGrid();
+            System.out.println(player1);
             player1.shoot(player2);
 
             if (player2.lost()) {
@@ -33,7 +33,7 @@ public class Game {
             /* Player 2 part */
             System.out.println("============================");
             System.out.println(player2.getName() + " your turn:");
-            player2.drawGrid();
+            System.out.println(player2);
             player2.shoot(player1);
 
             if (player1.lost()) {
