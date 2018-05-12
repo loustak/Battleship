@@ -54,16 +54,7 @@ public class Coord {
     }
 
     /**
-     * @param a String representing the coordinate to create
-     * @param a boolean used to say that this method is unsafe and is only used internally
-     */
-    private Coord(String coord, boolean unsafe) {
-        coord1 = getCoord1FromString(coord);
-        coord2 = getCoord2FromString(coord);
-    }
-
-    /**
-     * This constructor is only used during the creation of the ship
+     * This constructor doesn't do any check
      * @param coord1 The first part of coordinate as an int
      * @param coord2 The second part of the coordinate as an int
      */

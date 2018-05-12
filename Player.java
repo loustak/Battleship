@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * The abstract player class
  */
-abstract class Player {
+class Player {
 
     // Player name
     protected String name;
@@ -14,9 +14,10 @@ abstract class Player {
     // A list of all the coords the player have fired at
     protected ArrayList<Coord> fired;
 
-    public Player() {
+    public Player(String name) {
         fleet = new ArrayList<Ship>();
         fired = new ArrayList<Coord>();
+        this.name = name;
     }
 
     /**
@@ -25,12 +26,6 @@ abstract class Player {
     public String getName() {
         return name;
     }
-
-    /**
-     * Place all the ships one by one
-     * @param shipSizes are the differents ships sizes to place
-     */
-    public abstract void placeFleet(int[] shipSizes);
 
     /**
      * @param startCoord is a String representing the start coordinate of the ship
@@ -51,7 +46,7 @@ abstract class Player {
     }
 
     /**
-     * @param ship is the ship to test collide with
+     * @param ship is the Ship to test the collide with
      * @return a boolean set to true if the ship collide with any other ship, else return false
      */
     private boolean collide(Ship ship) {
@@ -72,19 +67,14 @@ abstract class Player {
     }
 
     /**
-     * @param ennemy is the ennemy Player to shoot at
-     */
-    public abstract void shoot(Player ennemy);
-
-    /**
      * @param coord is a String designating the location to shoot at
      * @return the Ship touched by the missile. If no ship where touched return null
      */
-    protected Ship shipHit(Player ennemy, String missileCoordString) throws CoordException {
+    protected Ship shipHit(String missileCoordString) throws CoordException {
         Coord missileCoord = new Coord(missileCoordString);
         Ship shipToReturn = null;
 
-        for (Ship ship : ennemy.getFleet()) {
+        for (Ship ship : getFleet()) {
             if (ship.hit(missileCoord)) {
                 // The shoot have touched something
                 missileCoord.setHit();
@@ -106,18 +96,6 @@ abstract class Player {
             }
         }
         return true;
-    }
-
-    /**
-     * @param n is an int corresponding to the number of "space" character to draw
-     * @return a String composed of n spaces
-     */
-    private String addSpace(int n) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < n; i++) {
-            stringBuilder.append(" ");
-        }
-        return stringBuilder.toString();
     }
 
     /**
@@ -146,6 +124,18 @@ abstract class Player {
             }
         }
         return false;
+    }
+
+    /**
+     * @param n is an int corresponding to the number of "space" character to draw
+     * @return a String composed of n spaces
+     */
+    private String addSpace(int n) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < n; i++) {
+            stringBuilder.append(" ");
+        }
+        return stringBuilder.toString();
     }
 
     /**
@@ -188,7 +178,7 @@ abstract class Player {
             stringBuilder.append(addSpace(maxCoordStringLength - numberString.length() + 1));
 
             for (int j = 0; j < width; j++) {
-                // Recompute the new coordinates
+                // Get the current coordinate
                 currentCoord = new Coord((char)(minLetter + j), i + 1);
 
                 Coord fired = firedAt(currentCoord);
