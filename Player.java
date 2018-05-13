@@ -33,14 +33,14 @@ class Player {
      * @throws CoordException means an error occured when creating the Coord 
      * @throws ShipException means an error occured when creating the Ship
      */
-    protected void addShip(String startCoord, String endCoord, int size) throws CoordException, ShipException {
+    protected void addShip(String startCoord, String endCoord, int length) throws CoordException, ShipException {
         Ship ship = new Ship(startCoord, endCoord);
         // Does the sheep collide with any others ships ?
         if (collide(ship)) {
             throw new ShipExceptionCollide();
         }
-        if (Math.abs(ship.getCoords().length) != size) {
-            throw new ShipExceptionSize(size);
+        if (Math.abs(ship.length()) != length) {
+            throw new ShipExceptionSize(length);
         }
         fleet.add(ship);
     }
@@ -70,11 +70,11 @@ class Player {
      * @param coord is a String designating the location to shoot at
      * @return the Ship touched by the missile. If no ship where touched return null
      */
-    protected Ship shipHit(String missileCoordString) throws CoordException {
+    protected Ship shipHit(Player ennemyPlayer, String missileCoordString) throws CoordException {
         Coord missileCoord = new Coord(missileCoordString);
         Ship shipToReturn = null;
 
-        for (Ship ship : getFleet()) {
+        for (Ship ship : ennemyPlayer.getFleet()) {
             if (ship.hit(missileCoord)) {
                 // The shoot have touched something
                 missileCoord.setHit();
@@ -115,9 +115,9 @@ class Player {
      * @param  coord is a Coord object representing the coord to check 
      * @return a boolean set to true if there is a ship at the coord position, else return false
      */
-    private boolean shipAt(Coord coord) {
+    private boolean isShipAt(Coord coord) {
         for (Ship ship : fleet) {
-            for (Coord coordInShip : ship.getCoords()) {
+            for (Coord coordInShip : ship.getCoordArray()) {
                 if (coordInShip.equals(coord)) {
                     return true;
                 }
@@ -139,24 +139,26 @@ class Player {
     }
 
     /**
-     * @return a string representing the player's grid
+     * @param  displayShips  is a boolean. If set to true the grid will contains all ships positions
+     * @param  displayShoots is a boolean. If set to true the grid will contains all shoots positions
+     * @return a String representing the player's grid
      */
-    public String toString() {
+    public String grid(boolean displayShips, boolean displayShoots) {
         Coord minCoord = Coord.getMinCoord();
         Coord maxCoord = Coord.getMaxCoord();
         // Will be used to move inside the grid
         Coord currentCoord;
 
         // Compute the width & height of the grid
-        int width = maxCoord.getCoord1() - minCoord.getCoord1() + 1;
-        int height = maxCoord.getCoord2() - minCoord.getCoord2() + 1;
+        int width = maxCoord.getCoordHorizontal() - minCoord.getCoordHorizontal() + 1;
+        int height = maxCoord.getCoordVertical() - minCoord.getCoordVertical() + 1;
         // Get the starting letter of the grid
-        int minLetter = minCoord.getCoord1();
+        int minLetterValue = minCoord.getCoordHorizontal();
         // Get the starting number of the grid
-        int minNumber = minCoord.getCoord2();
+        int minNumber = minCoord.getCoordVertical();
         // Compute the maximum length of a coordinate as a string, 
         // to properly align the grid
-        int maxCoordStringLength = String.valueOf(maxCoord.getCoord2()).length();
+        int maxCoordStringLength = String.valueOf(maxCoord.getCoordVertical()).length();
 
         String numberString;
         StringBuilder stringBuilder = new StringBuilder();
@@ -164,7 +166,7 @@ class Player {
         // Draw the letter coords line
         stringBuilder.append(addSpace(maxCoordStringLength + 1));
         for (int i = 0; i < width; i++) {
-            stringBuilder.append(String.valueOf((char)(minLetter + i)));
+            stringBuilder.append(String.valueOf((char)(minLetterValue + i)));
             stringBuilder.append(" ");
         }
         stringBuilder.append("\n");
@@ -179,19 +181,29 @@ class Player {
 
             for (int j = 0; j < width; j++) {
                 // Get the current coordinate
-                currentCoord = new Coord((char)(minLetter + j), i + 1);
+                currentCoord = new Coord((char)(minLetterValue + j), i + 1);
 
-                Coord fired = firedAt(currentCoord);
-                if (fired != null) {
-                    if (fired.isHit()) {
-                        stringBuilder.append("x");
-                    } else {
-                        stringBuilder.append("*");
+                if (displayShoots) {
+                    Coord fired = firedAt(currentCoord);
+                    if (fired != null) {
+                        if (fired.isHit()) {
+                            stringBuilder.append("x");
+                        } else {
+                            stringBuilder.append("*");
+                        }
+                    } else if (!displayShips) {
+                        stringBuilder.append(".");
                     }
                 }
-                if (shipAt(currentCoord)) {
-                    stringBuilder.append("o");
-                } else {
+                if (displayShips) {
+                    if (isShipAt(currentCoord)) {
+                        stringBuilder.append("o");
+                    } else {
+                        stringBuilder.append(".");
+                    }
+                }
+
+                if (!displayShips && !displayShoots) {
                     stringBuilder.append(".");
                 }
 

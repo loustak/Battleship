@@ -6,8 +6,8 @@ public class Coord {
 
     private static String minCoordString = "A1";
     private static String maxCoordString = "J10";
-    private static Coord minCoord = new Coord(getCoord1FromString(minCoordString), getCoord2FromString(minCoordString));
-    private static Coord maxCoord = new Coord(getCoord1FromString(maxCoordString), getCoord2FromString(maxCoordString));
+    private static Coord minCoord = new Coord(getCoordHorizontalFromString(minCoordString), getCoordVerticalFromString(minCoordString));
+    private static Coord maxCoord = new Coord(getCoordHorizontalFromString(maxCoordString), getCoordVerticalFromString(maxCoordString));
 
     /**
      * @return The first coordinate of the game as a Coord object
@@ -23,8 +23,8 @@ public class Coord {
         return maxCoord;
     }
 
-    private int coord1; // The letter part
-    private int coord2; // The number part
+    private int coordHorizontal;
+    private int coordVertical;
     private boolean hit = false;
 
     /**
@@ -40,62 +40,62 @@ public class Coord {
 
         try {
             // Try to get the two components of the coordinate
-            coord1 = getCoord1FromString(coord);
-            coord2 = getCoord2FromString(coord);
+            coordHorizontal = getCoordHorizontalFromString(coord);
+            coordVertical = getCoordVerticalFromString(coord);
         } catch (Exception e) {
             throw new CoordExceptionInvalidType(coord);
         }
 
         // Check if the coordinate is in the grid define by the max and min coord
-        if (coord1 < getMinCoord().coord1 || coord2 < getMinCoord().coord2 ||
-            coord1 > getMaxCoord().coord1 || coord2 > getMaxCoord().coord2) {
+        if (coordHorizontal < getMinCoord().coordHorizontal || coordVertical < getMinCoord().coordVertical ||
+            coordHorizontal > getMaxCoord().coordHorizontal || coordVertical > getMaxCoord().coordVertical) {
             throw new CoordExceptionInvalidRange(coord);
         }
     }
 
     /**
      * This constructor doesn't do any check
-     * @param coord1 The first part of coordinate as an int
-     * @param coord2 The second part of the coordinate as an int
+     * @param coordHorizontal The horizontal part of coordinate as an int
+     * @param coordVertical The vertical part of the coordinate as an int
      */
-    public Coord(int coord1, int coord2) {
-        this.coord1 = coord1;
-        this.coord2 = coord2;
+    public Coord(int coordHorizontal, int coordVertical) {
+        this.coordHorizontal = coordHorizontal;
+        this.coordVertical = coordVertical;
     }
 
     /**
-     * Get the first part of a String coordinate as an int
+     * Get the horizontal part of a String coordinate as an int
      * @param coord The coordinate to decompose
      */
-    private static int getCoord1FromString(String coord) {
+    private static int getCoordHorizontalFromString(String coord) {
         return (int) coord.toUpperCase().charAt(0);
     }
 
     /**
-     * Get the second part of a String coordinate as an int
+     * Get the vertical part of a String coordinate as an int
      * @param coord The coordinate to decompose
      */
-    private static int getCoord2FromString(String coord) {
-        String secondPart = coord.substring(1);
-        return Integer.parseInt(secondPart); 
+    private static int getCoordVerticalFromString(String coord) {
+        String verticalPart = coord.substring(1);
+        return Integer.parseInt(verticalPart); 
     }
 
     /**
-     * @return The first part of the coordinate as an int
+     * @return The horizontal part of the coordinate as an int
      */
-    public int getCoord1() {
-        return coord1;
+    public int getCoordHorizontal() {
+        return coordHorizontal;
     }
 
     /**
-     * @return The second part of the coordinate as an int
+     * @return The vertical part of the coordinate as an int
      */
-    public int getCoord2() {
-        return coord2;
+    public int getCoordVertical() {
+        return coordVertical;
     }
 
     /**
-     * Set the hit flag of the coordinate. Used to know where people fired
+     * Set the hit flag of the coordinate. Used to know where player fired
      */
     public void setHit() {
         hit = true;
@@ -117,13 +117,13 @@ public class Coord {
         if (obj == null) return false;
         if (getClass() != obj.getClass()) return false;
         Coord other = (Coord) obj;
-        return getCoord1() == other.getCoord1() && getCoord2() == other.getCoord2();
+        return getCoordHorizontal() == other.getCoordHorizontal() && getCoordVertical() == other.getCoordVertical();
     }
 
     /**
      * @return the coordinate as a String
      */
     public String toString() {
-        return ((char)getCoord1()) + Integer.toString(getCoord2());
+        return ((char)getCoordHorizontal()) + Integer.toString(getCoordVertical());
     }
 }

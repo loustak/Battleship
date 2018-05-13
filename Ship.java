@@ -18,7 +18,13 @@ public class Ship {
         Coord end = new Coord(endCoordString);
 
         boolean isHorizontal = isHorizontal(start, end);
-        int length = length(start, end, isHorizontal);
+        int length = 0;
+        // Compute the length of the ship
+        if (isHorizontal) {
+            length = end.getCoordHorizontal() - start.getCoordHorizontal();
+        } else {
+            length = end.getCoordVertical() - start.getCoordVertical();
+        }
 
         // Construct the coords array, length can be vertical if the ship is placed backward
         coords = new Coord[Math.abs(length) + 1];
@@ -29,22 +35,21 @@ public class Ship {
             int offset = (int) (i * Math.signum(length));
             // Add all the intermediate coords between the start coord and the end coord
             if (isHorizontal) {
-                coords[i] = new Coord(start.getCoord1() + offset, start.getCoord2());
+                coords[i] = new Coord(start.getCoordHorizontal() + offset, start.getCoordVertical());
             } else {
-                coords[i] = new Coord(start.getCoord1(), start.getCoord2() + offset);
+                coords[i] = new Coord(start.getCoordHorizontal(), start.getCoordVertical() + offset);
             }
         }
     }
 
     /**
      * @return a boolean set to true if the ship is horizontal and to false if it's vertical
-     * @throws ShipExceptionHorizontal an exception saying that the 
-     * ship must be either vertical or horizontal
+     * @throws ShipExceptionHorizontal an exception saying that the ship must be either vertical or horizontal
      */
     private boolean isHorizontal(Coord start, Coord end) throws ShipExceptionHorizontal {
-        if (start.getCoord2() == end.getCoord2() && start.getCoord1() != end.getCoord1()) {
+        if (start.getCoordHorizontal() != end.getCoordHorizontal() && start.getCoordVertical() == end.getCoordVertical()) {
             return true;
-        } else if (start.getCoord1() == end.getCoord1() && start.getCoord2() != end.getCoord2()) {
+        } else if (start.getCoordVertical() != end.getCoordVertical() && start.getCoordHorizontal() == end.getCoordHorizontal()) {
             return false;
         } else {
             throw new ShipExceptionHorizontal();
@@ -52,22 +57,16 @@ public class Ship {
     }
 
     /**
-     * @param isHorizontal is a boolean set to true if the ship is placed horizontally 
-     * and set to false if the ship is placed vertically
-     * @return the length of the ship
+     * @return a int corresponding to the length of the ship.
      */
-    private int length(Coord start, Coord end, boolean isHorizontal) {
-        if (isHorizontal) {
-            return end.getCoord1() - start.getCoord1();
-        } else {
-            return end.getCoord2() - start.getCoord2();
-        }
+    public int length() {
+        return getCoordArray().length;
     }
 
     /**
      * @return an array of Coord
      */
-    public Coord[] getCoords() {
+    public Coord[] getCoordArray() {
         return coords;
     }
 
@@ -119,9 +118,9 @@ public class Ship {
      */
     public boolean collide(Ship ship) {
         // For each of the ship coords
-        for (Coord thisCoord : this.getCoords()) {
+        for (Coord thisCoord : this.getCoordArray()) {
             // Check if any coords is equals to the other ship coords
-            for (Coord otherCoord : ship.getCoords()) {
+            for (Coord otherCoord : ship.getCoordArray()) {
                 if (thisCoord.equals(otherCoord)) {
                     return true;
                 }
