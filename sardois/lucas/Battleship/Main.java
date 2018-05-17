@@ -1,6 +1,6 @@
 package sardois.lucas.Battleship;
 
-import sardois.lucas.Battleship.AI.BegginerAI;
+import sardois.lucas.Battleship.IAI.AI.BegginerAI;
 
 class Main {
 
