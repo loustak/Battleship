@@ -1,26 +1,19 @@
 
-package sardois.lucas.Coord;
+package sardois.lucas.Battleship;
 
-/**
- * An utility coordinate class. A coordinate is composed of two int part.
- */
+import sardois.lucas.Battleship.Util.Random;
+
 public class Coord {
 
     private static String minCoordString = "A1";
     private static String maxCoordString = "J10";
-    private static Coord minCoord = new Coord(getCoordHorizontalFromString(minCoordString), getCoordVerticalFromString(minCoordString));
-    private static Coord maxCoord = new Coord(getCoordHorizontalFromString(maxCoordString), getCoordVerticalFromString(maxCoordString));
+    private static Coord minCoord = new Coord(getHorizontalPartFromString(minCoordString), getVerticalPartFromString(minCoordString), true);
+    private static Coord maxCoord = new Coord(getHorizontalPartFromString(maxCoordString), getVerticalPartFromString(maxCoordString), true);
 
-    /**
-     * @return The first coordinate of the game as a Coord object
-     */
     public static Coord getMinCoord() {
         return minCoord;
     }
 
-    /**
-     * @return The last coordinate of the game as a Coord object
-     */
     public static Coord getMaxCoord() {
         return maxCoord;
     }
@@ -33,11 +26,6 @@ public class Coord {
         return true;
     }
 
-    /**
-     * Get the horizontal part of a String coordinate as an int
-     * @param coord The coordinate to decompose
-     * @return return a int with the correct value of the coordinate. If the function fails it return -1
-     */
     public static int getHorizontalPartFromString(String coord) {
         try {
             return (int) coord.toUpperCase().charAt(0);    
@@ -46,73 +34,67 @@ public class Coord {
         }
     }
 
-    /**
-     * Get the vertical part of a String coordinate as an int
-     * @param coord The coordinate to decompose
-     * @return return a int with the correct value of the coordinate. If the function fails it return -1
-     */
     public static int getVerticalPartFromString(String coord) {
         try {
             String verticalPart = coord.substring(1);
             return Integer.parseInt(verticalPart);
-        catch (Exception exception) {
+        } catch (Exception exception) {
             return -1;
         }
     }
 
     public static boolean isInRange(int horizontal, int vertical) {
-        if (horizontal < getMinCoord().coordHorizontal || vertical < getMinCoord().coordVertical ||
-            horizontal > getMaxCoord().coordHorizontal || vertical > getMaxCoord().coordVertical) {
+        if (horizontal < getMinCoord().getCoordHorizontal() || vertical < getMinCoord().getCoordVertical() ||
+            horizontal > getMaxCoord().getCoordHorizontal() || vertical > getMaxCoord().getCoordVertical()) {
             return false;
         }
         return true;
+    }
+    
+    public static Coord getRandomCoord(int margin) {
+    	int minHorizontal = getMinCoord().getCoordHorizontal();
+    	int maxHorizontal = getMaxCoord().getCoordHorizontal();
+    	int minVertical = getMinCoord().getCoordVertical();
+    	int maxVertical = getMaxCoord().getCoordVertical();
+    	int horizontal = Random.randomRange(minHorizontal, maxHorizontal - margin);
+    	int vertical = Random.randomRange(minVertical, maxVertical - margin);
+    	return new Coord(horizontal, vertical);
     }
 
     private int coordHorizontal;
     private int coordVertical;
     private boolean hit = false;
 
-    /**
-     * @param coordHorizontal The horizontal part of coordinate as an int
-     * @param coordVertical The vertical part of the coordinate as an int
-     */
     public Coord(int coordHorizontal, int coordVertical) {
+        if (!Coord.isInRange(coordHorizontal, coordVertical)) {
+            throw new CoordOutOfBoundException();
+        }
+
         this.coordHorizontal = coordHorizontal;
         this.coordVertical = coordVertical;
     }
+    
+    private Coord(int coordHorizontal, int coordVertical, boolean unsafe) {
+    	this.coordHorizontal = coordHorizontal;
+        this.coordVertical = coordVertical;
+    }
 
-    /**
-     * @return The horizontal part of the coordinate as an int
-     */
     public int getCoordHorizontal() {
         return coordHorizontal;
     }
 
-    /**
-     * @return The vertical part of the coordinate as an int
-     */
     public int getCoordVertical() {
         return coordVertical;
     }
-
-    /**
-     * Set the hit flag of the coordinate. Used to know where player fired
-     */
+    
     public void setHit() {
         hit = true;
     }
 
-    /**
-     * @return a boolean set to true if this coordinate was hit, else it returns fals
-     */
     public boolean isHit() {
         return hit;
     }
 
-    /**
-     * @param obj The object to test the equality with
-     * @return a boolean indicating if the two objects are equals or not
-     */
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj == null) return false;
@@ -121,9 +103,6 @@ public class Coord {
         return getCoordHorizontal() == other.getCoordHorizontal() && getCoordVertical() == other.getCoordVertical();
     }
 
-    /**
-     * @return the coordinate as a String
-     */
     public String toString() {
         return ((char)getCoordHorizontal()) + Integer.toString(getCoordVertical());
     }

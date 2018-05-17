@@ -1,65 +1,95 @@
+package sardois.lucas.Battleship;
 
 import java.util.Scanner;
 
-/* 
-* A HumanPlayer IS a Player. 
-*/
 class HumanPlayer extends Player {
 
 	Scanner input;
 
 	public HumanPlayer(String name) {
-		super("Anon")
+		super(name);
 		// Ask for the player name
 		input = new Scanner(System.in);
-		System.out.print("Player " + (i + 1) + ", enter your name: ");
-		name = input.nextLine();
+		System.out.print(getName() + " enter your name: ");
+		this.name = input.nextLine();
 	}
 
-
-    public Ship addShip(int shipSize) {
-        Coord start = askForCoord();
-        Coord end = askForCoord();
-
-        if (Math.abs(Coord.length(start, end)) == 0) {
-            System.out.println("The ship length is not equals to " + shipSize + ".");
-        } else {
-            Ship ship = new Ship();
+    protected Ship placeShip(int shipSize) {
+    	System.out.println(getName() + " here is your grid:");
+    	System.out.println(grid(true, false));
+    	System.out.println("Place a ship of size " + shipSize);
+    	Coord startCoord, endCoord;
+        Ship shipToPlace = null;
+        
+        while (shipToPlace == null) {
+            System.out.print("Enter the start coordinate: ");
+            startCoord = askCoord();
+            System.out.print("Enter the end coordinate: ");
+            endCoord = askCoord();
+            
+            int orientation = Ship.getOrientation(startCoord, endCoord);
+            if (orientation == -1) {
+                System.out.print("The ship must be placed either vertically or horizontally.");
+            } else {
+            	boolean isHorizontal = orientation == 0;
+                int length = Ship.length(startCoord, endCoord, isHorizontal);
+                if (Math.abs(length) != shipSize) {
+                	System.out.print("The ship size must be " + shipSize + " instead of " + length + ".");
+                } else {
+                	shipToPlace = new Ship(startCoord, isHorizontal, length);
+                    // If the ship is coliding with any other ship we destroy it
+                    if (collide(shipToPlace)) {
+                    	System.out.print("This ship collide with another ship of your fleet.");
+                    	shipToPlace = null;
+                    }
+                }
+            }
+            if (shipToPlace == null) {
+            	System.out.println(" Please, place the ship again.");
+            }
         }
+    	
+        return shipToPlace;
     }
-
-    private Coord askForCoord() {
+    
+    public void shoot(Player ennemyPlayer) {
+    	System.out.println(getName() + " here are shoots you already made: ");
+    	System.out.println(grid(false, true));
+    	System.out.print("Enter the coordonate to shoot at: ");
+    	Shoot shoot = shootAt(ennemyPlayer, askCoord());
+    	System.out.println(shoot);
+    }
+    
+    private Coord askCoord() {
         String stringCoord;
         Coord coordReturn = null;
-        boolean valid = false;
 
-        while (!valid) {
+        while (coordReturn == null) {
             stringCoord = input.nextLine();
             // Check the length
-            if (!Coord.isLengthValid(stringCoord)) {
+            if (!Coord.isStringLengthValid(stringCoord)) {
                 System.out.println("Length is invalid.");
             } else  {
                 // Try to get int values from the string
                 int horizontal = Coord.getHorizontalPartFromString(stringCoord);
                 int vertical = Coord.getVerticalPartFromString(stringCoord);
+                
                 if (horizontal < 0 || vertical < 0) {
                     System.out.println("The coordinate does not follow the correct format.");
-                } else if (!Coord.isInRage(horizontal, vertical)) {
-                    System.out.println("The coordinate is not inside the grid which if from " + Coord.getMinCoord() + " to " + Coord.getMaxCoord() ".");
+                } else if (!Coord.isInRange(horizontal, vertical)) {
+                    System.out.println("The coordinate is not inside the grid which if from " + Coord.getMinCoord() + " to " + Coord.getMaxCoord() + ".");
                 } else  {
-                    // The coordinate is valid
+                    // At this point the coordinate is valid
                     coordReturn = new Coord(horizontal, vertical);
-                    valid = true;
                 }
+            }
+            if (coordReturn == null) {
+            	System.out.print("Enter the coordinate again: ");
             }
         }
         return coordReturn;
     }
 
-    /**
-     * @param n is an int corresponding to the number of "space" character to draw
-     * @return a String composed of n spaces
-     */
     private String addSpace(int n) {
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < n; i++) {
@@ -68,12 +98,7 @@ class HumanPlayer extends Player {
         return stringBuilder.toString();
     }
 
-    /**
-     * @param  displayShips  is a boolean. If set to true the grid will contains all ships positions
-     * @param  displayShoots is a boolean. If set to true the grid will contains all shoots positions
-     * @return a String representing the player's grid
-     */
-    public String grid(boolean displayShips, boolean displayShoots) {
+    private String grid(boolean displayShips, boolean displayShoots) {
         Coord minCoord = Coord.getMinCoord();
         Coord maxCoord = Coord.getMaxCoord();
         // Will be used to move inside the grid
@@ -114,12 +139,13 @@ class HumanPlayer extends Player {
                 currentCoord = new Coord((char)(minLetterValue + j), i + 1);
 
                 if (displayShoots) {
-                    Coord fired = firedAt(currentCoord);
-                    if (fired != null) {
-                        if (fired.isHit()) {
+                    Shoot shoot = firedAt(currentCoord);
+                    if (shoot != null) {
+                    	ShootState state = shoot.getShootState();
+                        if (state == ShootState.TOUCHED || state == ShootState.SINK) {
                             stringBuilder.append("x");
                         } else {
-                            stringBuilder.append("*");
+                        	stringBuilder.append("*");
                         }
                     } else if (!displayShips) {
                         stringBuilder.append(".");
