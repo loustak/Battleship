@@ -1,3 +1,2 @@
 ## Battleship
 
-#Todo

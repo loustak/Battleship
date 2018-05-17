@@ -1,6 +1,4 @@
 
-import java.util.Scanner;
-
 class Main {
 
     public static void main(String[] args) {
@@ -10,7 +8,7 @@ class Main {
         int[] shipSizes = {/*5, 4, 3, 3, */2};
 
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~");
-        System.out.println("~~~~~~~ Bttleship ~~~~~~~");
+        System.out.println("~~~~~~~ Battleship ~~~~~~");
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~\n");
 
         // Ask both players for their names and for their ships placements 
@@ -30,6 +28,7 @@ class Main {
                 while (!shipPlaced) {
                     System.out.print("Enter the start position of the ship: ");
                     coordStart = input.nextLine();
+
                     System.out.print("Enter the end position of the ship: ");
                     coordEnd = input.nextLine();
 

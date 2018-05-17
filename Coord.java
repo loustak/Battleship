@@ -1,4 +1,6 @@
 
+package sardois.lucas.Coord;
+
 /**
  * An utility coordinate class. A coordinate is composed of two int part.
  */
@@ -12,15 +14,58 @@ public class Coord {
     /**
      * @return The first coordinate of the game as a Coord object
      */
-    static public Coord getMinCoord() {
+    public static Coord getMinCoord() {
         return minCoord;
     }
 
     /**
      * @return The last coordinate of the game as a Coord object
      */
-    static public Coord getMaxCoord() {
+    public static Coord getMaxCoord() {
         return maxCoord;
+    }
+
+    public static boolean isStringLengthValid(String coord) {
+        int length = coord.length();
+        if (length < minCoordString.length() || length > maxCoordString.length()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Get the horizontal part of a String coordinate as an int
+     * @param coord The coordinate to decompose
+     * @return return a int with the correct value of the coordinate. If the function fails it return -1
+     */
+    public static int getHorizontalPartFromString(String coord) {
+        try {
+            return (int) coord.toUpperCase().charAt(0);    
+        } catch (Exception exception) {
+            return -1;
+        }
+    }
+
+    /**
+     * Get the vertical part of a String coordinate as an int
+     * @param coord The coordinate to decompose
+     * @return return a int with the correct value of the coordinate. If the function fails it return -1
+     */
+    public static int getVerticalPartFromString(String coord) {
+        try {
+            String verticalPart = coord.substring(1);
+            return Integer.parseInt(verticalPart);
+        catch (Exception exception) {
+            return -1;
+        }
+    }
+
+    public static boolean isInRange(int horizontal, int vertical) {
+        if (horizontal < getMinCoord().coordHorizontal || vertical < getMinCoord().coordVertical ||
+            horizontal > getMaxCoord().coordHorizontal || vertical > getMaxCoord().coordVertical) {
+            return false;
+        }
+        return true;
     }
 
     private int coordHorizontal;
@@ -28,56 +73,12 @@ public class Coord {
     private boolean hit = false;
 
     /**
-     * @param coord The string coordinate to convert to the object
-     * @throws CoordException Coordinate exception describing the error
-     */
-    public Coord(String coord) throws CoordException {
-        int length = coord.length();
-        // Check that the coord length is valid
-        if (length < minCoordString.length() || length > maxCoordString.length()) {
-            throw new CoordExceptionInvalidLength(coord);
-        }
-
-        try {
-            // Try to get the two components of the coordinate
-            coordHorizontal = getCoordHorizontalFromString(coord);
-            coordVertical = getCoordVerticalFromString(coord);
-        } catch (Exception e) {
-            throw new CoordExceptionInvalidType(coord);
-        }
-
-        // Check if the coordinate is in the grid define by the max and min coord
-        if (coordHorizontal < getMinCoord().coordHorizontal || coordVertical < getMinCoord().coordVertical ||
-            coordHorizontal > getMaxCoord().coordHorizontal || coordVertical > getMaxCoord().coordVertical) {
-            throw new CoordExceptionInvalidRange(coord);
-        }
-    }
-
-    /**
-     * This constructor doesn't do any check
      * @param coordHorizontal The horizontal part of coordinate as an int
      * @param coordVertical The vertical part of the coordinate as an int
      */
     public Coord(int coordHorizontal, int coordVertical) {
         this.coordHorizontal = coordHorizontal;
         this.coordVertical = coordVertical;
-    }
-
-    /**
-     * Get the horizontal part of a String coordinate as an int
-     * @param coord The coordinate to decompose
-     */
-    private static int getCoordHorizontalFromString(String coord) {
-        return (int) coord.toUpperCase().charAt(0);
-    }
-
-    /**
-     * Get the vertical part of a String coordinate as an int
-     * @param coord The coordinate to decompose
-     */
-    private static int getCoordVerticalFromString(String coord) {
-        String verticalPart = coord.substring(1);
-        return Integer.parseInt(verticalPart); 
     }
 
     /**

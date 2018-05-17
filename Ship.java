@@ -12,22 +12,9 @@ public class Ship {
      * @param endCoord a String indicating the end coordinate of the ship
      * @throws CoordException [description]
      */
-    public Ship(String startCoordString, String endCoordString) throws CoordException, ShipException {
-        // Try to convert String coord to real Coordinate
-        Coord start = new Coord(startCoordString);
-        Coord end = new Coord(endCoordString);
-
-        boolean isHorizontal = isHorizontal(start, end);
-        int length = 0;
-        // Compute the length of the ship
-        if (isHorizontal) {
-            length = end.getCoordHorizontal() - start.getCoordHorizontal();
-        } else {
-            length = end.getCoordVertical() - start.getCoordVertical();
-        }
-
+    public Ship(Coord start, int orientation, int length) {
         // Construct the coords array, length can be vertical if the ship is placed backward
-        coords = new Coord[Math.abs(length) + 1];
+        coords = new Coord[Math.abs(length)];
 
         // Add all the intermediates coords in the array
         for (int i = 0; i < coords.length; i++) {
@@ -42,17 +29,20 @@ public class Ship {
         }
     }
 
-    /**
-     * @return a boolean set to true if the ship is horizontal and to false if it's vertical
-     * @throws ShipExceptionHorizontal an exception saying that the ship must be either vertical or horizontal
-     */
-    private boolean isHorizontal(Coord start, Coord end) throws ShipExceptionHorizontal {
+    private static int getOrientation(Coord start, Coord end) {
         if (start.getCoordHorizontal() != end.getCoordHorizontal() && start.getCoordVertical() == end.getCoordVertical()) {
-            return true;
+            return 1;
         } else if (start.getCoordVertical() != end.getCoordVertical() && start.getCoordHorizontal() == end.getCoordHorizontal()) {
-            return false;
+            return 0;
+        }
+        return -1;
+    }
+
+    public static int length(Coord start, Coord end, boolean isHorizontal) {
+        if (isHorizontal) {
+            return end.getCoordHorizontal() - start.getCoordHorizontal();
         } else {
-            throw new ShipExceptionHorizontal();
+            return end.getCoordVertical() - start.getCoordVertical();
         }
     }
 
