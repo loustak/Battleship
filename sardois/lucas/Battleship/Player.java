@@ -26,16 +26,7 @@ public abstract class Player {
 		return fleet;
 	}
 
-	public void placeFleet(int shipSizes[]) {
-		Ship ship;
-		for (int size : shipSizes) {
-			ship = placeShip(size);
-			if (collide(ship)) {
-				throw new ShipCollideException();
-			}
-			fleet.add(ship);
-		}
-	}
+	public abstract void placeFleet(int shipSizes[]);
 	
 	protected abstract Ship placeShip(int shipSize);
 

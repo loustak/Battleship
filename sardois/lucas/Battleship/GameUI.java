@@ -1,27 +1,20 @@
 package sardois.lucas.Battleship;
 
-public class Game {
+public class GameUI extends Game {
 
-	protected Player currentPlayer;
-	protected Player ennemyPlayer;
-	protected int[] shipSizes = {/*5, 4, 3, 3,*/ 2};
-	
-	public Game(Player firstPlayer, Player endPlayer) {
-		this.currentPlayer = firstPlayer;
-		this.ennemyPlayer = endPlayer;
+	public GameUI(Player firstPlayer, Player endPlayer) {
+		super(firstPlayer, endPlayer);
 	}
-	
-	public void swapPlayer() {
-		Player currentPlayerSaved = currentPlayer;
-		currentPlayer = ennemyPlayer;
-		ennemyPlayer = currentPlayerSaved;
-	}
-	
+
+	@Override
 	public Player play() {
 		Player winner = null;
 		
 		// Ask both players to place their fleet
+		System.out.println(currentPlayer.getName() + " place your ships:");
 		currentPlayer.placeFleet(shipSizes);
+		
+		
 		ennemyPlayer.placeFleet(shipSizes);
 		
 		// Game loop
@@ -36,5 +29,7 @@ public class Game {
 		}
 		
 		return winner;
-	};
+	}
+	
+	
 }

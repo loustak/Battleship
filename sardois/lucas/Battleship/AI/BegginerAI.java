@@ -3,12 +3,26 @@ package sardois.lucas.Battleship.AI;
 import sardois.lucas.Battleship.Coord;
 import sardois.lucas.Battleship.Player;
 import sardois.lucas.Battleship.Ship;
+import sardois.lucas.Battleship.ShipCollideException;
 import sardois.lucas.Battleship.Util.Random;
 
 public class BegginerAI extends Player {
 	
 	public BegginerAI() {
 		super("Begginer AI");
+	}
+	
+	@Override
+	public void placeFleet(int[] shipSizes) {
+		Ship ship;
+		
+		for (int size : shipSizes) {
+			ship = placeShip(size);
+			if (collide(ship)) {
+				throw new ShipCollideException();
+			}
+			fleet.add(ship);
+		}
 	}
 	
 	@Override
@@ -38,6 +52,4 @@ public class BegginerAI extends Player {
 		Coord randomCoord = Coord.getRandomCoord(0);
 		shootAt(ennemyPlayer, randomCoord);
 	}
-	
-	
 }

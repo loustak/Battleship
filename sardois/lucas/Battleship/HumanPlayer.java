@@ -2,7 +2,7 @@ package sardois.lucas.Battleship;
 
 import java.util.Scanner;
 
-class HumanPlayer extends Player {
+class HumanPlayer extends Player  {
 
 	Scanner input;
 
@@ -13,10 +13,23 @@ class HumanPlayer extends Player {
 		System.out.print(getName() + " enter your name: ");
 		this.name = input.nextLine();
 	}
+	
+	public void placeFleet(int shipSizes[]) {
+		Ship ship;
+		System.out.println(getName() + " place your fleet. Here is your grid: ");
+		System.out.println(grid(false, false));
+		
+		for (int size : shipSizes) {
+			ship = placeShip(size);
+			if (collide(ship)) {
+				throw new ShipCollideException();
+			}
+			fleet.add(ship);
+			System.out.println(grid(true, false));
+		}
+	}
 
     protected Ship placeShip(int shipSize) {
-    	System.out.println(getName() + " here is your grid:");
-    	System.out.println(grid(true, false));
     	System.out.println("Place a ship of size " + shipSize);
     	Coord startCoord, endCoord;
         Ship shipToPlace = null;
@@ -48,12 +61,12 @@ class HumanPlayer extends Player {
             	System.out.println(" Please, place the ship again.");
             }
         }
-    	
+        
         return shipToPlace;
     }
     
     public void shoot(Player ennemyPlayer) {
-    	System.out.println(getName() + " here are shoots you already made: ");
+    	System.out.println(getName() + " here are the shoots you already made: ");
     	System.out.println(grid(false, true));
     	System.out.print("Enter the coordonate to shoot at: ");
     	Shoot shoot = shootAt(ennemyPlayer, askCoord());
@@ -98,7 +111,7 @@ class HumanPlayer extends Player {
         return stringBuilder.toString();
     }
 
-    private String grid(boolean displayShips, boolean displayShoots) {
+    public String grid(boolean displayShips, boolean displayShoots) {
         Coord minCoord = Coord.getMinCoord();
         Coord maxCoord = Coord.getMaxCoord();
         // Will be used to move inside the grid
