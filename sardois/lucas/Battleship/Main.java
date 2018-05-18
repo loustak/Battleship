@@ -3,6 +3,7 @@ package sardois.lucas.Battleship;
 import java.util.Scanner;
 
 import sardois.lucas.Battleship.AI.BeginnerAI;
+import sardois.lucas.Battleship.AI.MediumAI;
 
 class Main {
 
@@ -32,6 +33,10 @@ class Main {
     			player1 = new HumanPlayer("Player 1");
     			player2 = new BeginnerAI();
     			break;
+    		case 3:
+    			player1 = new HumanPlayer("Player 1");
+    			player2 = new MediumAI();
+    			break;
     	}
 
     	GameUI game = new GameUI(player1, player2);
@@ -47,6 +52,8 @@ class Main {
     		
     		if (Main.getNumber(input, 1, 2) == 2) {
     			playAgain = false;
+    		} else {
+    			game = new GameUI(game.getLoser(), game.getWinner());
     		}
     	}
     	

@@ -5,14 +5,12 @@ public abstract class Game {
 	protected Player[] players;
 	protected Player winner = null;
 	protected Player loser = null;
-	protected int[] shipSizes = {/*5, 4, 3, 3,*/ 2};
+	protected int[] shipSizes = {5, 4, 3, 3, 2};
 	protected int currentPlayerIndex = 0;
 	protected int turn = 1;
 	
 	public Game(Player firstPlayer, Player secondPlayer) {
 		players = new Player[2];
-		players[0] = firstPlayer;
-		players[1] = secondPlayer;
 	}
 	
 	protected void nextTurn() {
@@ -45,17 +43,10 @@ public abstract class Game {
 	public abstract int play();
 	
 	public void reset() {
-		turn = 0;
+		turn = 1;
 		currentPlayerIndex = 0;
-		for (Player player : players) {
-			player.reset();
-		}
-	}
-	
-	protected void swapPlayer() {
-		if (winner != null && loser != null) {
-			players[0] = loser;
-			players[1] = winner;
-		}
+		loser = null;
+		winner = null;
+		
 	}
 }

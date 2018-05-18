@@ -14,16 +14,12 @@ public class GameAI extends Game {
 		Player ennemyPlayer;
 		winner = null;
 		
-		reset();
-		swapPlayer();
-		
-		// Ask both players to place their fleet
 		for (Player player : players) {
 			player.placeFleet(shipSizes);
 		}
 		
 		// Game loop
-		while (winner == null) {
+		while (getWinner() == null) {
 			currentPlayer = getCurrentPlayer();
 			ennemyPlayer = getEnnemyPlayer();
 			currentPlayer.shoot(ennemyPlayer);
@@ -32,7 +28,6 @@ public class GameAI extends Game {
 				winner = currentPlayer;
 			}
 			
-			turn++;
 			nextTurn();
 		}
 		

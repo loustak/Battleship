@@ -11,9 +11,6 @@ public class GameUI extends Game {
 		Player ennemyPlayer;
 		winner = null;
 		
-		reset();
-		swapPlayer();
-		
 		// Ask both players to place their fleet
 		for (Player player : players) {
 			if (player.hasUI()) {
@@ -24,7 +21,7 @@ public class GameUI extends Game {
 		}
 		
 		// Game loop
-		while (winner == null) {
+		while (getWinner() == null) {
 			currentPlayer = getCurrentPlayer();
 			ennemyPlayer = getEnnemyPlayer();
 			

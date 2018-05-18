@@ -13,21 +13,17 @@ public abstract class Player {
 	protected ArrayList<Shoot> shoots;
 
 	public Player(String name) {
-		reset();
+		fleet = new ArrayList<Ship>();
+		shoots = new ArrayList<Shoot>();
 		this.name = name;
 	}
 	
-	public String getName() {
+	public final String getName() {
 		return name;
 	}
 	
-	private ArrayList<Ship> getFleet() {
+	private final ArrayList<Ship> getFleet() {
 		return fleet;
-	}
-	
-	public final void reset() {
-		fleet = new ArrayList<Ship>();
-		shoots = new ArrayList<Shoot>();
 	}
 	
 	public abstract boolean hasUI();
@@ -36,7 +32,7 @@ public abstract class Player {
 	
 	protected abstract Ship placeShip(int shipSize);
 
-	protected boolean collide(Ship ship) {
+	protected final boolean collide(Ship ship) {
 		// Check for every ships in the fleet
 		for (Ship otherShip : fleet) {
 			if (ship.collide(otherShip)) {
@@ -46,7 +42,7 @@ public abstract class Player {
 		return false;
 	}
 	
-	protected Shoot shootAt(Player ennemyPlayer, Coord missileCoord) {
+	protected final Shoot shootAt(Player ennemyPlayer, Coord missileCoord) {
 		ShootState shootState = ShootState.MISSED;
 		for (Ship ship : ennemyPlayer.getFleet()) {
 			shootState = ship.hit(missileCoord);
@@ -61,7 +57,7 @@ public abstract class Player {
 	
 	public abstract Shoot shoot(Player ennemyPlayer);
 
-	public boolean lost() {
+	public final boolean lost() {
 		for (Ship ship : fleet) {
 			if (!ship.isDestroyed()) {
 				return false;
@@ -70,7 +66,7 @@ public abstract class Player {
 		return true;
 	}
 
-	protected Shoot firedAt(Coord coord) {
+	protected final Shoot firedAt(Coord coord) {
 		for (Shoot shoot : shoots) {
 			if (coord.equals(shoot.getCoord())) {
 				return shoot;
@@ -79,7 +75,7 @@ public abstract class Player {
 		return null;
 	}
 
-	protected boolean isShipAt(Coord coord) {
+	protected final boolean isShipAt(Coord coord) {
 		for (Ship ship : fleet) {
 			for (Coord coordInShip : ship.getCoordArray()) {
 				if (coordInShip.equals(coord)) {
