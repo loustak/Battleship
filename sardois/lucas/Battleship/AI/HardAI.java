@@ -41,8 +41,6 @@ public class HardAI extends AIPlayer {
 		if (horizontal - 1 > Coord.getMinCoord().getCoordHorizontal()) {
 			addToHunt(new Coord(horizontal - 1, vertical));
 		}
-		
-		System.out.println("Hunt started");
 	}
 
 	@Override
@@ -61,10 +59,8 @@ public class HardAI extends AIPlayer {
 		}
 		
 		if (!huntShoot.isEmpty()) {
-			System.out.println("Not empty");
 			if (previousShoot != null && previousShoot.getShootState() == ShootState.SINK) {
 				huntShoot.clear();
-				System.out.println("Hunt finished");
 			} else {
 				randomCoord = huntShoot.remove(0);
 			}
@@ -75,10 +71,13 @@ public class HardAI extends AIPlayer {
 				randomCoord = Coord.getRandomCoord(0);
 			} while (firedAt(randomCoord) != null);
 		}
-		
-		System.out.println("Size: " + huntShoot.size());
 	
 		return shootAt(ennemyPlayer, randomCoord);
+	}
+	
+	@Override
+	public void reset() {
+		huntShoot.clear();
 	}
 
 }

@@ -53,7 +53,7 @@ class Main {
     		if (Main.getNumber(input, 1, 2) == 2) {
     			playAgain = false;
     		} else {
-    			game = new GameUI(game.getLoser(), game.getWinner());
+    			game.reset();
     		}
     	}
     	

@@ -1,29 +1,56 @@
 package sardois.lucas.Battleship.AI;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import sardois.lucas.Battleship.Game;
 import sardois.lucas.Battleship.GameAI;
 
 public class AIProof {
+	
+	static private final int games = 100;
+	static private final String fileName = "ai_proof.csv";
 
 	public static void main(String[] args) {
 		
-		AIPlayer player1 = new BeginnerAI();
-		AIPlayer player2 = new BeginnerAI();
+		int winBeginnerVsMedium = AIProof.fight(new BeginnerAI(), new MediumAI());
+		int winBeginnerVsHard = AIProof.fight(new BeginnerAI(), new HardAI());
+		int winMediumVsHard = AIProof.fight(new MediumAI(), new HardAI());
 		
-		Game game = new GameAI(player1, player2);
-		int games = 100;
-		int wins = 0;
+		FileWriter file = null;
+		BufferedWriter writer = null;
+		
+		try {
+			file = new FileWriter(fileName);
+			writer = new BufferedWriter(file); 
+		    writer.write("AI Name; score; AI Name2; score2\n");
+		    writer.write("AI Level Beginner;" + winBeginnerVsMedium +  "; Level Medium;" + (games - winBeginnerVsMedium) + "\n");
+		    writer.write("AI Level Beginner;" + winBeginnerVsHard +  "; Level Hard;" + (games - winBeginnerVsHard) + "\n");
+		    writer.write("AI Level Medium;" + winMediumVsHard +  "; Level Hard;" + (games - winMediumVsHard) + "\n");
+		} catch (IOException exception) {
+		    System.out.println("Can't write file \"" + fileName + "\": " + exception);
+		} finally {
+			try {
+				writer.close();
+			} catch (IOException exception) {
+				System.out.println("Can't write file \"" + fileName + "\": " + exception);
+			}
+		}
+	}
+
+	static int fight(AIPlayer ai1, AIPlayer ai2) {
+		Game game = new GameAI(ai1, ai2);
+		int win = 0;
 		
 		for (int i = 0; i < games; i++) {
 			game.play();
-			if (game.getWinner() == player1) {
-				wins++;
+			if (game.getWinner() == ai1) {
+				win++;
 			}
-			System.out.println("Winner is " + (AIPlayer)game.getWinner());
-			game = new GameAI(player1, player2);
+			game.reset();
 		}
 		
-		int winPercentage = (int)((((float) wins / (float)games)) * 100);
-		System.out.println(player1.getName() + " won " + winPercentage + "% of the matches against " + player2.getName());
+		return win;
 	}
 }

@@ -18,7 +18,6 @@ public class GameAI extends Game {
 			player.placeFleet(shipSizes);
 		}
 		
-		// Game loop
 		while (getWinner() == null) {
 			currentPlayer = getCurrentPlayer();
 			ennemyPlayer = getEnnemyPlayer();

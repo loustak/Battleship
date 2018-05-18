@@ -17,7 +17,7 @@ public abstract class AIPlayer extends Player {
 	}
 	
 	@Override
-	public final void placeFleet(int[] shipSizes) {
+	public void placeFleet(int[] shipSizes) {
 		Ship ship;
 
 		for (int size : shipSizes) {
@@ -30,7 +30,7 @@ public abstract class AIPlayer extends Player {
 	}
 
 	@Override
-	protected final Ship placeShip(int shipSize) {
+	public Ship placeShip(int shipSize) {
 		Ship shipToReturn = null;
 		Coord startCoord;
 		boolean isHorizontal;

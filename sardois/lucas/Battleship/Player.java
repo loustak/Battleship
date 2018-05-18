@@ -22,15 +22,9 @@ public abstract class Player {
 		return name;
 	}
 	
-	private final ArrayList<Ship> getFleet() {
-		return fleet;
-	}
-	
-	public abstract boolean hasUI();
-
 	public abstract void placeFleet(int shipSizes[]);
 	
-	protected abstract Ship placeShip(int shipSize);
+	public abstract Ship placeShip(int shipSize);
 
 	protected final boolean collide(Ship ship) {
 		// Check for every ships in the fleet
@@ -42,9 +36,11 @@ public abstract class Player {
 		return false;
 	}
 	
+	public abstract Shoot shoot(Player ennemyPlayer);
+	
 	protected final Shoot shootAt(Player ennemyPlayer, Coord missileCoord) {
 		ShootState shootState = ShootState.MISSED;
-		for (Ship ship : ennemyPlayer.getFleet()) {
+		for (Ship ship : ennemyPlayer.fleet) {
 			shootState = ship.hit(missileCoord);
 			if (shootState != ShootState.MISSED) {
 				break;
@@ -54,8 +50,6 @@ public abstract class Player {
 		shoots.add(shoot);
 		return shoot;
 	}
-	
-	public abstract Shoot shoot(Player ennemyPlayer);
 
 	public final boolean lost() {
 		for (Ship ship : fleet) {
@@ -84,6 +78,12 @@ public abstract class Player {
 			}
 		}
 		return false;
+	}
+	
+	protected abstract boolean hasUI();
+	
+	protected void reset() {
+		
 	}
 	
 	public String grid(boolean displayShips, boolean displayShoots) {

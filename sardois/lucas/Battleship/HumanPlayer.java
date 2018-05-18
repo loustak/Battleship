@@ -2,7 +2,7 @@ package sardois.lucas.Battleship;
 
 import java.util.Scanner;
 
-class HumanPlayer extends Player  {
+class HumanPlayer extends Player {
 
 	Scanner input;
 
@@ -14,10 +14,11 @@ class HumanPlayer extends Player  {
 		this.name = input.nextLine();
 	}
 	
-	public boolean hasUI() {
+	public final boolean hasUI() {
 		return true;
 	}
 	
+	@Override
 	public void placeFleet(int shipSizes[]) {
 		Ship ship;
 		
@@ -31,7 +32,8 @@ class HumanPlayer extends Player  {
 		}
 	}
 
-    protected Ship placeShip(int shipSize) {
+	@Override
+    public Ship placeShip(int shipSize) {
     	System.out.println("Place a ship of size " + shipSize);
     	Coord startCoord, endCoord;
         Ship shipToPlace = null;

@@ -11,7 +11,6 @@ public class GameUI extends Game {
 		Player ennemyPlayer;
 		winner = null;
 		
-		// Ask both players to place their fleet
 		for (Player player : players) {
 			if (player.hasUI()) {
 				System.out.println(player + " place your ships on the grid.");
@@ -20,7 +19,6 @@ public class GameUI extends Game {
 			player.placeFleet(shipSizes);
 		}
 		
-		// Game loop
 		while (getWinner() == null) {
 			currentPlayer = getCurrentPlayer();
 			ennemyPlayer = getEnnemyPlayer();
@@ -28,8 +26,8 @@ public class GameUI extends Game {
 			if (currentPlayer.hasUI()) {
 				System.out.println(currentPlayer + " your grid of previous shoot: ");
 				System.out.println(currentPlayer.grid(false, true));
-				System.out.print("Enter the coordinate to shoot at: ");
 			}
+			System.out.print("Enter the coordinate to shoot at: ");
 			Shoot shoot = currentPlayer.shoot(ennemyPlayer);
 			switch (shoot.getShootState()) {
 				case MISSED:
