@@ -4,9 +4,10 @@ import sardois.lucas.Battleship.Coord;
 import sardois.lucas.Battleship.Player;
 import sardois.lucas.Battleship.Ship;
 import sardois.lucas.Battleship.ShipCollideException;
+import sardois.lucas.Battleship.Shoot;
 import sardois.lucas.Battleship.Util.Random;
 
-public class BegginerAI extends Player implements IAI {
+public class BegginerAI extends AI {
 	
 	public BegginerAI() {
 		super("Begginer AI");
@@ -48,8 +49,8 @@ public class BegginerAI extends Player implements IAI {
 	}
 
 	@Override
-	public void shoot(Player ennemyPlayer) {
+	public Shoot shoot(Player ennemyPlayer) {
 		Coord randomCoord = Coord.getRandomCoord(0);
-		shootAt(ennemyPlayer, randomCoord);
+		return shootAt(ennemyPlayer, randomCoord);
 	}
 }

@@ -25,6 +25,8 @@ public abstract class Player {
 	private ArrayList<Ship> getFleet() {
 		return fleet;
 	}
+	
+	public abstract boolean hasUI();
 
 	public abstract void placeFleet(int shipSizes[]);
 	
@@ -53,7 +55,7 @@ public abstract class Player {
 		return shoot;
 	}
 	
-	public abstract void shoot(Player ennemyPlayer);
+	public abstract Shoot shoot(Player ennemyPlayer);
 
 	public boolean lost() {
 		for (Ship ship : fleet) {
@@ -83,4 +85,6 @@ public abstract class Player {
 		}
 		return false;
 	}
+	
+	public abstract String grid(boolean displayShips, boolean displayShoots);
 }

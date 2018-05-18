@@ -14,10 +14,12 @@ class HumanPlayer extends Player  {
 		this.name = input.nextLine();
 	}
 	
+	public boolean hasUI() {
+		return true;
+	}
+	
 	public void placeFleet(int shipSizes[]) {
 		Ship ship;
-		System.out.println(getName() + " place your fleet. Here is your grid: ");
-		System.out.println(grid(false, false));
 		
 		for (int size : shipSizes) {
 			ship = placeShip(size);
@@ -65,12 +67,8 @@ class HumanPlayer extends Player  {
         return shipToPlace;
     }
     
-    public void shoot(Player ennemyPlayer) {
-    	System.out.println(getName() + " here are the shoots you already made: ");
-    	System.out.println(grid(false, true));
-    	System.out.print("Enter the coordonate to shoot at: ");
-    	Shoot shoot = shootAt(ennemyPlayer, askCoord());
-    	System.out.println(shoot);
+    public Shoot shoot(Player ennemyPlayer) {
+    	return shootAt(ennemyPlayer, askCoord());
     }
     
     private Coord askCoord() {
