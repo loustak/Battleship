@@ -7,9 +7,9 @@ import sardois.lucas.Battleship.ShipCollideException;
 import sardois.lucas.Battleship.Shoot;
 import sardois.lucas.Battleship.Util.Random;
 
-public class BegginerAI extends AI {
+public class BegginerAIPlayer extends AI {
 	
-	public BegginerAI() {
+	public BegginerAIPlayer() {
 		super("Begginer AI");
 	}
 	

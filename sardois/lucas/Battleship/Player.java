@@ -86,5 +86,7 @@ public abstract class Player {
 		return false;
 	}
 	
-	public abstract String grid(boolean displayShips, boolean displayShoots);
+	public String grid(boolean displayShips, boolean displayShoots) {
+		return "";
+	}
 }
