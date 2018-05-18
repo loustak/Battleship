@@ -1,10 +1,13 @@
 package sardois.lucas.Battleship;
 
-public class Game {
+public abstract class Game {
 
 	protected Player[] players;
-	protected int currentPlayerIndex = 0;
+	protected Player winner = null;
+	protected Player loser = null;
 	protected int[] shipSizes = {/*5, 4, 3, 3,*/ 2};
+	protected int currentPlayerIndex = 0;
+	protected int turn = 1;
 	
 	public Game(Player firstPlayer, Player secondPlayer) {
 		players = new Player[2];
@@ -12,82 +15,47 @@ public class Game {
 		players[1] = secondPlayer;
 	}
 	
-	protected void swapPlayer() {
+	protected void nextTurn() {
 		currentPlayerIndex++;
 		if (currentPlayerIndex >= players.length) {
 			currentPlayerIndex = 0;
+			turn++;
 		}
 	}
 	
-	private Player getEnnemyPlayer() {
+	protected Player getEnnemyPlayer() {
 		if (currentPlayerIndex == 0) {
 			return players[1];
 		}
 		return players[0];
 	}
 	
-	private Player getCurrentPlayer() {
+	protected Player getCurrentPlayer() {
 		return players[currentPlayerIndex];
 	}
 	
-	private boolean shouldDisplayUI() {
-		for (Player player : players) {
-			if (player.hasUI()) {
-				return true;
-			}
-		}
-		return false;
+	public Player getWinner() {
+		return winner;
 	}
 	
-	public Player play() {
-		Player winner = null;
-		Player currentPlayer;
-		Player ennemyPlayer;
-		
-		// Ask both players to place their fleet
+	public Player getLoser() {
+		return loser;
+	}
+	
+	public abstract int play();
+	
+	public void reset() {
+		turn = 0;
+		currentPlayerIndex = 0;
 		for (Player player : players) {
-			if (player.hasUI()) {
-				System.out.println(player.getName() + " place your ships on the grid.");
-				System.out.println(player.grid(false, false));
-			}
-			player.placeFleet(shipSizes);
+			player.reset();
 		}
-		
-		// Game loop
-		while (winner == null) {
-			currentPlayer = getCurrentPlayer();
-			ennemyPlayer = getEnnemyPlayer();
-			
-			if (currentPlayer.hasUI()) {
-				System.out.println(currentPlayer.getName() + " your grid of previous shoot: ");
-				System.out.println(currentPlayer.grid(false, true));
-				System.out.print("Enter the coordinate to shoot at: ");
-			}
-			Shoot shoot = currentPlayer.shoot(ennemyPlayer);
-			if (shouldDisplayUI()) {
-				switch (shoot.getShootState()) {
-					case MISSED:
-						System.out.println(currentPlayer.getName() + " missed his shoot at " + shoot.getCoord() + ".");
-						break;
-					case TOUCHED:
-						System.out.println(currentPlayer.getName() + " touched a ship at " + shoot.getCoord() + ".");
-						break;
-					case SINK:
-						System.out.println(currentPlayer.getName() + " sinked a ship at " + shoot.getCoord() + ".");
-						break;
-				}
-			}
-			
-			if (ennemyPlayer.lost()) {
-				winner = currentPlayer;
-				if (shouldDisplayUI()) {
-					System.out.println(winner.getName() + " win the game !");
-				}
-			}
-			
-			swapPlayer();
+	}
+	
+	protected void swapPlayer() {
+		if (winner != null && loser != null) {
+			players[0] = loser;
+			players[1] = winner;
 		}
-		
-		return winner;
 	}
 }

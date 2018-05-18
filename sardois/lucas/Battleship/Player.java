@@ -13,17 +13,21 @@ public abstract class Player {
 	protected ArrayList<Shoot> shoots;
 
 	public Player(String name) {
-		fleet = new ArrayList<Ship>();
-		shoots = new ArrayList<Shoot>();
+		reset();
 		this.name = name;
 	}
-
+	
 	public String getName() {
 		return name;
 	}
 	
 	private ArrayList<Ship> getFleet() {
 		return fleet;
+	}
+	
+	public final void reset() {
+		fleet = new ArrayList<Ship>();
+		shoots = new ArrayList<Shoot>();
 	}
 	
 	public abstract boolean hasUI();
@@ -88,5 +92,9 @@ public abstract class Player {
 	
 	public String grid(boolean displayShips, boolean displayShoots) {
 		return "";
+	}
+	
+	public String toString() {
+		return getName();
 	}
 }

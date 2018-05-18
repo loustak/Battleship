@@ -2,7 +2,7 @@ package sardois.lucas.Battleship;
 
 import java.util.Scanner;
 
-import sardois.lucas.Battleship.AI.BegginerAIPlayer;
+import sardois.lucas.Battleship.AI.BeginnerAI;
 
 class Main {
 
@@ -12,44 +12,64 @@ class Main {
     	System.out.println("Battleship");
     	System.out.println("--Menu--");
     	System.out.println("1. Human VS Human");
-    	System.out.println("2. Human VS Begginer");
+    	System.out.println("2. Human VS Beginner");
     	System.out.println("3. Human VS Medium");
     	System.out.println("4. Human VS Advanced");
     	System.out.println("5. Quit");
     	
-    	String optionString;
-    	int optionNumber = 0;
     	Player player1 = null;
     	Player player2 = null;
     	
-    	while (player1 == null && player2 == null) {
-    		System.out.print("Choose an option (a number): ");
-    		optionString = input.nextLine();
-        	try {
-        		optionNumber = Integer.parseInt(optionString);
-        	} catch (Exception e) {
-        		System.out.println("The option is not a valid number");
-        		continue;
-        	}
-        	switch (optionNumber) {
-        		case 1:
-        			player1 = new HumanPlayer("Player 1");
-        			player2 = new HumanPlayer("Player 2");
-        			break;
-        		case 2:
-        			player1 = new HumanPlayer("Player 1");
-        			player2 = new BegginerAIPlayer();
-        			break;
-        		default:
-        			player1 = null;
-        			player2 = null;
-        			System.out.println("The number is invalid");
-        			break;
-        	}
+    	System.out.print("Choose an option (a number): ");
+    	int choice = Main.getNumber(input, 1, 5);
+    	
+    	switch (choice) {
+    		case 1:
+    			player1 = new HumanPlayer("Player 1");
+    			player2 = new HumanPlayer("Player 2");
+    			break;
+    		case 2:
+    			player1 = new HumanPlayer("Player 1");
+    			player2 = new BeginnerAI();
+    			break;
     	}
 
+    	GameUI game = new GameUI(player1, player2);
+    	boolean playAgain = true;
     	
-    	Game game = new Game(player1, player2);
-    	Player winner = game.play();
+    	while (playAgain) {
+    		game.play();
+    		
+    		System.out.println("Play again?");
+    		System.out.println("1. Yes");
+    		System.out.println("2. No");
+    		System.out.print("Choose an option (a number): ");
+    		
+    		if (Main.getNumber(input, 1, 2) == 2) {
+    			playAgain = false;
+    		}
+    	}
+    	
+    	System.out.println("Bye!");
+    	input.close();
+    }
+    
+    static int getNumber(Scanner input, int min, int max) {
+    	int number;
+    	boolean valid = false;
+    	
+    	do {
+    		while (!input.hasNextInt()) {
+    			input.next();
+    			System.out.print("This is not a valid number. Please, enter again: ");
+    		}
+    		number = input.nextInt();
+    		if (number < min || number > max) {
+    			System.out.print("This is not a valid number. Please, enter again: ");
+    		} else {
+    			valid = true;
+    		}
+    	} while (!valid);
+    	return number;
     }
 }

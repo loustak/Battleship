@@ -2,9 +2,9 @@ package sardois.lucas.Battleship.AI;
 
 import sardois.lucas.Battleship.Player;
 
-public abstract class AI extends Player {
+public abstract class AIPlayer extends Player {
 
-	public AI(String name) {
+	public AIPlayer(String name) {
 		super(name);
 	}
 	

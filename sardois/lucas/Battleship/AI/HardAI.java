@@ -1,6 +1,5 @@
 package sardois.lucas.Battleship.AI;
 
-public class Tests {
-
+public class HardAI {
 
 }
