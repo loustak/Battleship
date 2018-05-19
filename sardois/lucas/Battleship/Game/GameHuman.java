@@ -1,8 +1,11 @@
-package sardois.lucas.Battleship;
+package sardois.lucas.Battleship.Game;
 
-public class GameUI extends Game {
+import sardois.lucas.Battleship.Player;
+import sardois.lucas.Battleship.Shoot;
 
-	public GameUI(Player firstPlayer, Player secondPlayer) {
+public class GameHuman extends Game {
+
+	public GameHuman(Player firstPlayer, Player secondPlayer) {
 		super(firstPlayer, secondPlayer);
 	}
 

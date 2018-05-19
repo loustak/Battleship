@@ -1,22 +1,26 @@
-package sardois.lucas.Battleship.AI;
+package fr.battleship;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import sardois.lucas.Battleship.Game;
-import sardois.lucas.Battleship.GameAI;
+import sardois.lucas.Battleship.AI.AIPlayer;
+import sardois.lucas.Battleship.AI.BeginnerAI;
+import sardois.lucas.Battleship.AI.HardAI;
+import sardois.lucas.Battleship.AI.MediumAI;
+import sardois.lucas.Battleship.Game.Game;
+import sardois.lucas.Battleship.Game.GameAI;
 
-public class AIProof {
+public class TestIA {
 	
 	static private final int games = 100;
 	static private final String fileName = "ai_proof.csv";
 
 	public static void main(String[] args) {
 		
-		int winBeginnerVsMedium = AIProof.fight(new BeginnerAI(), new MediumAI());
-		int winBeginnerVsHard = AIProof.fight(new BeginnerAI(), new HardAI());
-		int winMediumVsHard = AIProof.fight(new MediumAI(), new HardAI());
+		int winBeginnerVsMedium = TestIA.fight(new BeginnerAI(), new MediumAI());
+		int winBeginnerVsHard = TestIA.fight(new BeginnerAI(), new HardAI());
+		int winMediumVsHard = TestIA.fight(new MediumAI(), new HardAI());
 		
 		FileWriter file = null;
 		BufferedWriter writer = null;

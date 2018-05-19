@@ -13,13 +13,21 @@ public abstract class Player {
 	protected ArrayList<Shoot> shoots;
 
 	public Player(String name) {
-		fleet = new ArrayList<Ship>();
-		shoots = new ArrayList<Shoot>();
+		resetFleet();
+		resetShoots();
 		this.name = name;
 	}
 	
 	public final String getName() {
 		return name;
+	}
+	
+	public final void resetFleet() {
+		fleet = new ArrayList<Ship>();
+	}
+	
+	public final void resetShoots() {
+		shoots = new ArrayList<Shoot>();
 	}
 	
 	public abstract void placeFleet(int shipSizes[]);
@@ -80,9 +88,9 @@ public abstract class Player {
 		return false;
 	}
 	
-	protected abstract boolean hasUI();
+	public abstract boolean hasUI();
 	
-	protected void reset() {
+	public void reset() {
 		
 	}
 	

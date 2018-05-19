@@ -3,7 +3,9 @@ package sardois.lucas.Battleship;
 import java.util.Scanner;
 
 import sardois.lucas.Battleship.AI.BeginnerAI;
+import sardois.lucas.Battleship.AI.HardAI;
 import sardois.lucas.Battleship.AI.MediumAI;
+import sardois.lucas.Battleship.Game.GameHuman;
 
 class Main {
 
@@ -37,24 +39,32 @@ class Main {
     			player1 = new HumanPlayer("Player 1");
     			player2 = new MediumAI();
     			break;
+    		case 4:
+    			player1 = new HumanPlayer("Player 1");
+    			player2 = new HardAI();
+    			break;
+    		case 5:
+    			break;
     	}
 
-    	GameUI game = new GameUI(player1, player2);
-    	boolean playAgain = true;
-    	
-    	while (playAgain) {
-    		game.play();
-    		
-    		System.out.println("Play again?");
-    		System.out.println("1. Yes");
-    		System.out.println("2. No");
-    		System.out.print("Choose an option (a number): ");
-    		
-    		if (Main.getNumber(input, 1, 2) == 2) {
-    			playAgain = false;
-    		} else {
-    			game.reset();
-    		}
+    	if (choice != 5) {
+    		GameHuman game = new GameHuman(player1, player2);
+        	boolean playAgain = true;
+        	
+        	while (playAgain) {
+        		game.play();
+        		
+        		System.out.println("Play again?");
+        		System.out.println("1. Yes");
+        		System.out.println("2. No");
+        		System.out.print("Choose an option (a number): ");
+        		
+        		if (Main.getNumber(input, 1, 2) == 2) {
+        			playAgain = false;
+        		} else {
+        			game.reset();
+        		}
+        	}
     	}
     	
     	System.out.println("Bye!");

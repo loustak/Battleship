@@ -46,23 +46,20 @@ class HumanPlayer extends Player {
             
             int orientation = Ship.getOrientation(startCoord, endCoord);
             if (orientation == -1) {
-                System.out.print("The ship must be placed either vertically or horizontally.");
+                System.out.print("The ship must be placed either vertically or horizontally. Please, place the ship again.");
             } else {
             	boolean isHorizontal = orientation == 0;
                 int length = Ship.length(startCoord, endCoord, isHorizontal);
                 if (Math.abs(length) != shipSize) {
-                	System.out.print("The ship size must be " + shipSize + " instead of " + length + ".");
+                	System.out.print("The ship size must be " + shipSize + " instead of " + length + ". Please, place the ship again.");
                 } else {
                 	shipToPlace = new Ship(startCoord, isHorizontal, length);
                     // If the ship is coliding with any other ship we destroy it
                     if (collide(shipToPlace)) {
-                    	System.out.print("This ship collide with another ship of your fleet.");
+                    	System.out.print("This ship collide with another ship of your fleet. Please, place the ship again.");
                     	shipToPlace = null;
                     }
                 }
-            }
-            if (shipToPlace == null) {
-            	System.out.println(" Please, place the ship again.");
             }
         }
         

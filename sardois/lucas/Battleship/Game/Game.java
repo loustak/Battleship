@@ -1,6 +1,6 @@
-package sardois.lucas.Battleship;
+package sardois.lucas.Battleship.Game;
 
-import java.util.ArrayList;
+import sardois.lucas.Battleship.Player;
 
 public abstract class Game {
 
@@ -51,8 +51,8 @@ public abstract class Game {
 		currentPlayerIndex = 0;
 		
 		for (Player player : players) {
-			player.fleet = new ArrayList<Ship>();
-			player.shoots = new ArrayList<Shoot>();
+			player.resetFleet();
+			player.resetShoots();
 			player.reset();
 		}
 	}
