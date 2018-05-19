@@ -1,8 +1,8 @@
-package sardois.lucas.Battleship.AI;
+package sardois.lucas.Battleship.Player.AI;
 
-import sardois.lucas.Battleship.Coord;
-import sardois.lucas.Battleship.Player;
-import sardois.lucas.Battleship.Shoot;
+import sardois.lucas.Battleship.Core.Coord;
+import sardois.lucas.Battleship.Core.CoordShoot;
+import sardois.lucas.Battleship.Player.Player;
 
 public class MediumAI extends AIPlayer {
 
@@ -11,7 +11,7 @@ public class MediumAI extends AIPlayer {
 	}
 
 	@Override
-	public Shoot shoot(Player ennemyPlayer) {
+	public CoordShoot shoot(Player ennemyPlayer) {
 		Coord randomCoord = null;
 		do {
 			randomCoord = Coord.getRandomCoord(0);

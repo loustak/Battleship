@@ -1,13 +1,12 @@
 package sardois.lucas.Battleship.Game;
 
-import sardois.lucas.Battleship.Player;
+import sardois.lucas.Battleship.Player.Player;
 
 public abstract class Game {
 
 	protected Player[] players;
 	protected Player winner = null;
 	protected Player loser = null;
-	protected int[] shipSizes = {/*5, 4, 3, 3,*/ 2};
 	protected int currentPlayerIndex = 0;
 	protected int turn = 1;
 	

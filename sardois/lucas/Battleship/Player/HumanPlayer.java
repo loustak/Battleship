@@ -1,8 +1,14 @@
-package sardois.lucas.Battleship;
+package sardois.lucas.Battleship.Player;
 
 import java.util.Scanner;
 
-class HumanPlayer extends Player {
+import sardois.lucas.Battleship.Core.Coord;
+import sardois.lucas.Battleship.Core.CoordShoot;
+import sardois.lucas.Battleship.Core.Ship;
+import sardois.lucas.Battleship.Core.ShipCollideException;
+import sardois.lucas.Battleship.Core.ShootState;
+
+public class HumanPlayer extends Player {
 
 	Scanner input;
 
@@ -10,8 +16,6 @@ class HumanPlayer extends Player {
 		super(name);
 		// Ask for the player name
 		input = new Scanner(System.in);
-		System.out.print(getName() + " enter your name: ");
-		this.name = input.nextLine();
 	}
 	
 	public final boolean hasUI() {
@@ -66,7 +70,7 @@ class HumanPlayer extends Player {
         return shipToPlace;
     }
     
-    public Shoot shoot(Player ennemyPlayer) {
+    public CoordShoot shoot(Player ennemyPlayer) {
     	return shootAt(ennemyPlayer, askCoord());
     }
     
@@ -149,7 +153,7 @@ class HumanPlayer extends Player {
                 currentCoord = new Coord((char)(minLetterValue + j), i + 1);
 
                 if (displayShoots) {
-                    Shoot shoot = firedAt(currentCoord);
+                    CoordShoot shoot = firedAt(currentCoord);
                     if (shoot != null) {
                     	ShootState state = shoot.getShootState();
                         if (state == ShootState.TOUCHED || state == ShootState.SINK) {

@@ -1,7 +1,7 @@
 package sardois.lucas.Battleship.Game;
 
-import sardois.lucas.Battleship.Player;
-import sardois.lucas.Battleship.AI.AIPlayer;
+import sardois.lucas.Battleship.Player.Player;
+import sardois.lucas.Battleship.Player.AI.AIPlayer;
 
 public class GameAI extends Game {
 
@@ -16,7 +16,7 @@ public class GameAI extends Game {
 		winner = null;
 		
 		for (Player player : players) {
-			player.placeFleet(shipSizes);
+			player.placeFleet(GameRule.shipSizes);
 		}
 		
 		while (getWinner() == null) {

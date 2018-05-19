@@ -1,4 +1,4 @@
-package sardois.lucas.Battleship;
+package sardois.lucas.Battleship.Core;
 
 /**
  * A ship is an array of coordinates
@@ -6,11 +6,11 @@ package sardois.lucas.Battleship;
 public class Ship {
 
     // Coord array representing the positions of the ship
-    private Coord[] coords;
+    private CoordShoot[] coords;
 
     public Ship(Coord start, boolean isHorizontal, int length) {
         // Construct the coords array, length can be vertical if the ship is placed backward
-        coords = new Coord[Math.abs(length)];
+        coords = new CoordShoot[Math.abs(length)];
 
         // Add all the intermediates coords in the array
         for (int i = 0; i < coords.length; i++) {
@@ -18,9 +18,9 @@ public class Ship {
             int offset = (int) (i * Math.signum(length));
             // Add all the intermediate coords between the start coord and the end coord
             if (isHorizontal) {
-                coords[i] = new Coord(start.getCoordHorizontal() + offset, start.getCoordVertical());
+                coords[i] = new CoordShoot(start.getCoordHorizontal() + offset, start.getCoordVertical());
             } else {
-                coords[i] = new Coord(start.getCoordHorizontal(), start.getCoordVertical() + offset);
+                coords[i] = new CoordShoot(start.getCoordHorizontal(), start.getCoordVertical() + offset);
             }
         }
     }
@@ -67,8 +67,9 @@ public class Ship {
 
     public ShootState hit(Coord missileCoord) {
         for (int i = 0; i < coords.length; i++) {
-            if (coords[i].equals(missileCoord)) {
-                coords[i].setHit();
+        	Coord coordToCheck = (Coord) coords[i]; 
+            if (coordToCheck.equals(missileCoord)) {
+                coords[i].setShootState(ShootState.TOUCHED);
                 if (isDestroyed()) {
                 	return ShootState.SINK;
                 } else {
@@ -81,7 +82,7 @@ public class Ship {
 
     public boolean isDestroyed() {
         for (int i = 0; i < coords.length; i++) {
-            if (!coords[i].isHit()) {
+            if (coords[i].getShootState() == ShootState.NOT_SHOOT) {
                 return false;
             }
         }

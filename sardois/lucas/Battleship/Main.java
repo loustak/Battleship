@@ -2,15 +2,20 @@ package sardois.lucas.Battleship;
 
 import java.util.Scanner;
 
-import sardois.lucas.Battleship.AI.BeginnerAI;
-import sardois.lucas.Battleship.AI.HardAI;
-import sardois.lucas.Battleship.AI.MediumAI;
 import sardois.lucas.Battleship.Game.GameHuman;
+import sardois.lucas.Battleship.Player.HumanPlayer;
+import sardois.lucas.Battleship.Player.Player;
+import sardois.lucas.Battleship.Player.AI.BeginnerAI;
+import sardois.lucas.Battleship.Player.AI.HardAI;
+import sardois.lucas.Battleship.Player.AI.MediumAI;
 
 class Main {
 
     public static void main(String[] args) {
-    	Scanner input = new Scanner(System.in);
+    	Scanner inputNumber = new Scanner(System.in);
+    	Scanner inputName = new Scanner(System.in);
+    	Player player1 = null;
+    	Player player2 = null;
     	
     	System.out.println("Battleship");
     	System.out.println("--Menu--");
@@ -20,27 +25,29 @@ class Main {
     	System.out.println("4. Human VS Advanced");
     	System.out.println("5. Quit");
     	
-    	Player player1 = null;
-    	Player player2 = null;
-    	
     	System.out.print("Choose an option (a number): ");
-    	int choice = Main.getNumber(input, 1, 5);
+    	int choice = Main.getNumber(inputNumber, 1, 5);
     	
     	switch (choice) {
     		case 1:
-    			player1 = new HumanPlayer("Player 1");
-    			player2 = new HumanPlayer("Player 2");
+    			System.out.print("Player 1 enter your name: ");
+    			player1 = new HumanPlayer(inputName.nextLine());
+    			System.out.print("Player 2 enter your name: ");
+    			player2 = new HumanPlayer(inputName.nextLine());
     			break;
     		case 2:
-    			player1 = new HumanPlayer("Player 1");
+    			System.out.print("Enter your name: ");
+    			player1 = new HumanPlayer(inputName.nextLine());
     			player2 = new BeginnerAI();
     			break;
     		case 3:
-    			player1 = new HumanPlayer("Player 1");
+    			System.out.print("Enter your name: ");
+    			player1 = new HumanPlayer(inputName.nextLine());
     			player2 = new MediumAI();
     			break;
     		case 4:
-    			player1 = new HumanPlayer("Player 1");
+    			System.out.print("Enter your name: ");
+    			player1 = new HumanPlayer(inputName.nextLine());
     			player2 = new HardAI();
     			break;
     		case 5:
@@ -59,7 +66,7 @@ class Main {
         		System.out.println("2. No");
         		System.out.print("Choose an option (a number): ");
         		
-        		if (Main.getNumber(input, 1, 2) == 2) {
+        		if (Main.getNumber(inputNumber, 1, 2) == 2) {
         			playAgain = false;
         		} else {
         			game.reset();
@@ -68,7 +75,8 @@ class Main {
     	}
     	
     	System.out.println("Bye!");
-    	input.close();
+    	inputNumber.close();
+    	inputName.close();
     }
     
     static int getNumber(Scanner input, int min, int max) {
@@ -87,6 +95,7 @@ class Main {
     			valid = true;
     		}
     	} while (!valid);
+    	
     	return number;
     }
 }

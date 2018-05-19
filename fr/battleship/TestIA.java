@@ -4,12 +4,12 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import sardois.lucas.Battleship.AI.AIPlayer;
-import sardois.lucas.Battleship.AI.BeginnerAI;
-import sardois.lucas.Battleship.AI.HardAI;
-import sardois.lucas.Battleship.AI.MediumAI;
 import sardois.lucas.Battleship.Game.Game;
 import sardois.lucas.Battleship.Game.GameAI;
+import sardois.lucas.Battleship.Player.AI.AIPlayer;
+import sardois.lucas.Battleship.Player.AI.BeginnerAI;
+import sardois.lucas.Battleship.Player.AI.HardAI;
+import sardois.lucas.Battleship.Player.AI.MediumAI;
 
 public class TestIA {
 	

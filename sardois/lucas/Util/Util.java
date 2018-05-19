@@ -1,6 +1,6 @@
-package sardois.lucas.Battleship.Util;
+package sardois.lucas.Util;
 
-public class Random {
+public class Util {
 	
     public static int randomRange(int min, int max) {
     	int range = (max - min) + 1;

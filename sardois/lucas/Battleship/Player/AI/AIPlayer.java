@@ -1,10 +1,10 @@
-package sardois.lucas.Battleship.AI;
+package sardois.lucas.Battleship.Player.AI;
 
-import sardois.lucas.Battleship.Coord;
-import sardois.lucas.Battleship.Player;
-import sardois.lucas.Battleship.Ship;
-import sardois.lucas.Battleship.ShipCollideException;
-import sardois.lucas.Battleship.Util.Random;
+import sardois.lucas.Battleship.Core.Coord;
+import sardois.lucas.Battleship.Core.Ship;
+import sardois.lucas.Battleship.Core.ShipCollideException;
+import sardois.lucas.Battleship.Player.Player;
+import sardois.lucas.Util.Util;
 
 public abstract class AIPlayer extends Player {
 
@@ -37,7 +37,7 @@ public abstract class AIPlayer extends Player {
 
 		while (shipToReturn == null) {
 			startCoord = Coord.getRandomCoord(shipSize);
-			isHorizontal = Random.randomRange(0, 1) == 0;
+			isHorizontal = Util.randomRange(0, 1) == 0;
 
 			shipToReturn = new Ship(startCoord, isHorizontal, shipSize);
 

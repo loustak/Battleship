@@ -1,14 +1,13 @@
 
-package sardois.lucas.Battleship;
+package sardois.lucas.Battleship.Core;
 
-import sardois.lucas.Battleship.Util.Random;
+import sardois.lucas.Battleship.Game.GameRule;
+import sardois.lucas.Util.Util;
 
 public class Coord {
 
-    private static String minCoordString = "A1";
-    private static String maxCoordString = "J10";
-    private static Coord minCoord = new Coord(getHorizontalPartFromString(minCoordString), getVerticalPartFromString(minCoordString), true);
-    private static Coord maxCoord = new Coord(getHorizontalPartFromString(maxCoordString), getVerticalPartFromString(maxCoordString), true);
+    private static final Coord minCoord = new Coord(getHorizontalPartFromString(GameRule.minCoordString), getVerticalPartFromString(GameRule.minCoordString), true);
+    private static final Coord maxCoord = new Coord(getHorizontalPartFromString(GameRule.maxCoordString), getVerticalPartFromString(GameRule.maxCoordString), true);
 
     public static Coord getMinCoord() {
         return minCoord;
@@ -20,7 +19,7 @@ public class Coord {
 
     public static boolean isStringLengthValid(String coord) {
         int length = coord.length();
-        if (length < minCoordString.length() || length > maxCoordString.length()) {
+        if (length < GameRule.minCoordString.length() || length > GameRule.maxCoordString.length()) {
             return false;
         }
         return true;
@@ -56,49 +55,45 @@ public class Coord {
     	int maxHorizontal = getMaxCoord().getCoordHorizontal();
     	int minVertical = getMinCoord().getCoordVertical();
     	int maxVertical = getMaxCoord().getCoordVertical();
-    	int horizontal = Random.randomRange(minHorizontal, maxHorizontal - margin);
-    	int vertical = Random.randomRange(minVertical, maxVertical - margin);
+    	int horizontal = Util.randomRange(minHorizontal, maxHorizontal - margin);
+    	int vertical = Util.randomRange(minVertical, maxVertical - margin);
     	return new Coord(horizontal, vertical);
     }
 
-    private int coordHorizontal;
-    private int coordVertical;
-    private boolean hit = false;
+    protected int horizontal;
+    protected int vertical;
 
     public Coord(int coordHorizontal, int coordVertical) {
         if (!Coord.isInRange(coordHorizontal, coordVertical)) {
             throw new CoordOutOfBoundException();
         }
 
-        this.coordHorizontal = coordHorizontal;
-        this.coordVertical = coordVertical;
+        this.horizontal = coordHorizontal;
+        this.vertical = coordVertical;
+    }
+    
+    public Coord(Coord coord) {
+    	horizontal = coord.getCoordHorizontal();
+    	vertical = coord.getCoordVertical();
     }
     
     private Coord(int coordHorizontal, int coordVertical, boolean unsafe) {
-    	this.coordHorizontal = coordHorizontal;
-        this.coordVertical = coordVertical;
+    	this.horizontal = coordHorizontal;
+        this.vertical = coordVertical;
     }
 
     public int getCoordHorizontal() {
-        return coordHorizontal;
+        return horizontal;
     }
 
     public int getCoordVertical() {
-        return coordVertical;
-    }
-    
-    public void setHit() {
-        hit = true;
-    }
-
-    public boolean isHit() {
-        return hit;
+        return vertical;
     }
 
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj == null) return false;
-        if (getClass() != obj.getClass()) return false;
+        if (!(obj instanceof Coord)) return false;
         Coord other = (Coord) obj;
         return getCoordHorizontal() == other.getCoordHorizontal() && getCoordVertical() == other.getCoordVertical();
     }

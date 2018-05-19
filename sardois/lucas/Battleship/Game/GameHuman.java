@@ -1,7 +1,7 @@
 package sardois.lucas.Battleship.Game;
 
-import sardois.lucas.Battleship.Player;
-import sardois.lucas.Battleship.Shoot;
+import sardois.lucas.Battleship.Core.CoordShoot;
+import sardois.lucas.Battleship.Player.Player;
 
 public class GameHuman extends Game {
 
@@ -19,7 +19,7 @@ public class GameHuman extends Game {
 				System.out.println(player + " place your ships on the grid.");
 				System.out.println(player.grid(false, false));
 			}
-			player.placeFleet(shipSizes);
+			player.placeFleet(GameRule.shipSizes);
 		}
 		
 		while (getWinner() == null) {
@@ -31,18 +31,8 @@ public class GameHuman extends Game {
 				System.out.println(currentPlayer.grid(false, true));
 			}
 			System.out.print("Enter the coordinate to shoot at: ");
-			Shoot shoot = currentPlayer.shoot(ennemyPlayer);
-			switch (shoot.getShootState()) {
-				case MISSED:
-					System.out.println(currentPlayer + " missed his shoot at " + shoot.getCoord() + ".");
-					break;
-				case TOUCHED:
-					System.out.println(currentPlayer + " touched a ship at " + shoot.getCoord() + ".");
-					break;
-				case SINK:
-					System.out.println(currentPlayer + " sinked a ship at " + shoot.getCoord() + ".");
-					break;
-			}
+			CoordShoot shoot = currentPlayer.shoot(ennemyPlayer);
+			System.out.println(currentPlayer + " shoot at " + shoot + ".");
 			
 			if (ennemyPlayer.lost()) {
 				winner = currentPlayer;

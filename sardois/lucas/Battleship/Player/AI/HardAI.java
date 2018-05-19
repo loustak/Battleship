@@ -1,11 +1,11 @@
-package sardois.lucas.Battleship.AI;
+package sardois.lucas.Battleship.Player.AI;
 
 import java.util.ArrayList;
 
-import sardois.lucas.Battleship.Coord;
-import sardois.lucas.Battleship.Player;
-import sardois.lucas.Battleship.Shoot;
-import sardois.lucas.Battleship.ShootState;
+import sardois.lucas.Battleship.Core.Coord;
+import sardois.lucas.Battleship.Core.CoordShoot;
+import sardois.lucas.Battleship.Core.ShootState;
+import sardois.lucas.Battleship.Player.Player;
 
 public class HardAI extends AIPlayer {
 	
@@ -44,17 +44,16 @@ public class HardAI extends AIPlayer {
 	}
 
 	@Override
-	public Shoot shoot(Player ennemyPlayer) {
+	public CoordShoot shoot(Player ennemyPlayer) {
 		Coord randomCoord = null;
-		Shoot previousShoot = null;
+		CoordShoot previousShoot = null;
 		if (!shoots.isEmpty()) {
 			previousShoot = shoots.get(shoots.size() - 1);
 		}
 		
 		if (huntShoot.isEmpty()) {
 			if (previousShoot != null && previousShoot.getShootState() == ShootState.TOUCHED) {
-				Coord shootCoord = previousShoot.getCoord();
-				addShootAround(shootCoord);
+				addShootAround(previousShoot);
 			}
 		}
 		

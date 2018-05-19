@@ -1,4 +1,4 @@
-package sardois.lucas.Battleship;
+package sardois.lucas.Battleship.Core;
 
 public class ShipCollideException extends RuntimeException {
 

@@ -1,7 +1,12 @@
 
-package sardois.lucas.Battleship;
+package sardois.lucas.Battleship.Player;
 
 import java.util.ArrayList;
+
+import sardois.lucas.Battleship.Core.Coord;
+import sardois.lucas.Battleship.Core.Ship;
+import sardois.lucas.Battleship.Core.CoordShoot;
+import sardois.lucas.Battleship.Core.ShootState;
 
 public abstract class Player {
 
@@ -10,7 +15,7 @@ public abstract class Player {
 	// All the ship of the player
 	protected ArrayList<Ship> fleet;
 	// A list of all the coords the player have fired at
-	protected ArrayList<Shoot> shoots;
+	protected ArrayList<CoordShoot> shoots;
 
 	public Player(String name) {
 		resetFleet();
@@ -27,7 +32,7 @@ public abstract class Player {
 	}
 	
 	public final void resetShoots() {
-		shoots = new ArrayList<Shoot>();
+		shoots = new ArrayList<CoordShoot>();
 	}
 	
 	public abstract void placeFleet(int shipSizes[]);
@@ -44,9 +49,9 @@ public abstract class Player {
 		return false;
 	}
 	
-	public abstract Shoot shoot(Player ennemyPlayer);
+	public abstract CoordShoot shoot(Player ennemyPlayer);
 	
-	protected final Shoot shootAt(Player ennemyPlayer, Coord missileCoord) {
+	protected final CoordShoot shootAt(Player ennemyPlayer, Coord missileCoord) {
 		ShootState shootState = ShootState.MISSED;
 		for (Ship ship : ennemyPlayer.fleet) {
 			shootState = ship.hit(missileCoord);
@@ -54,7 +59,7 @@ public abstract class Player {
 				break;
 			}
 		}
-		Shoot shoot = new Shoot(missileCoord, shootState);
+		CoordShoot shoot = new CoordShoot(missileCoord, shootState);
 		shoots.add(shoot);
 		return shoot;
 	}
@@ -68,9 +73,9 @@ public abstract class Player {
 		return true;
 	}
 
-	protected final Shoot firedAt(Coord coord) {
-		for (Shoot shoot : shoots) {
-			if (coord.equals(shoot.getCoord())) {
+	protected final CoordShoot firedAt(Coord coord) {
+		for (CoordShoot shoot : shoots) {
+			if (coord.equals(shoot)) {
 				return shoot;
 			}
 		}
