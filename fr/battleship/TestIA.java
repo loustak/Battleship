@@ -11,11 +11,20 @@ import sardois.lucas.Player.AI.BeginnerAI;
 import sardois.lucas.Player.AI.HardAI;
 import sardois.lucas.Player.AI.MediumAI;
 
+/**
+ * This class play games between the differents levels of AI
+ * @author Lucas
+ *
+ */
 public class TestIA {
 	
 	static private final int games = 100;
 	static private final String fileName = "ai_proof.csv";
 
+	/**
+	 * The main method
+	 * @param args the arguments to pass
+	 */
 	public static void main(String[] args) {
 		
 		int winBeginnerVsMedium = TestIA.fight(new BeginnerAI(), new MediumAI());

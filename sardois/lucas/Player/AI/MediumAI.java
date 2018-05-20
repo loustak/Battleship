@@ -4,8 +4,16 @@ import sardois.lucas.Core.Coord;
 import sardois.lucas.Core.CoordShoot;
 import sardois.lucas.Player.Player;
 
+/**
+ * This AI shoot randomly but never twice on the same position
+ * @author Lucas
+ *
+ */
 public class MediumAI extends AIPlayer {
 
+	/**
+	 * Construct a medium AI
+	 */
 	public MediumAI() {
 		super("Medium AI");
 	}

@@ -8,11 +8,19 @@ import sardois.lucas.Core.Ship;
 import sardois.lucas.Core.ShipCollideException;
 import sardois.lucas.Core.ShootState;
 
-
+/**
+ * A HumanPlayer can interact with the program input/output
+ * @author Lucas
+ *
+ */
 public class HumanPlayer extends Player {
 
 	Scanner input;
 
+	/**
+	 * 
+	 * @param name the name of the player
+	 */
 	public HumanPlayer(String name) {
 		super(name);
 		// Ask for the player name

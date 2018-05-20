@@ -3,8 +3,18 @@ package sardois.lucas.Game;
 import sardois.lucas.Core.CoordShoot;
 import sardois.lucas.Player.Player;
 
+/**
+ * A game where between each action we will update UI
+ * @author Lucas
+ *
+ */
 public class GameUI extends Game {
 
+	/**
+	 * 
+	 * @param firstPlayer the player to start the game
+	 * @param secondPlayer the second player
+	 */
 	public GameUI(Player firstPlayer, Player secondPlayer) {
 		super(firstPlayer, secondPlayer);
 	}

@@ -9,8 +9,18 @@ import sardois.lucas.Game.GameUI;
 import sardois.lucas.Player.HumanPlayer;
 import sardois.lucas.Player.Player;
 
+/**
+ * 
+ * @author Lucas
+ * Main class of this package. It will promp to the user multiple 
+ * games choices and then start a game.
+ */
 public class Battleship {
 
+	/**
+	 * Main method
+	 * @param args the arguments to pass on the program execution.
+	 */
     public static void main(String[] args) {
     	Scanner inputNumber = new Scanner(System.in);
     	Scanner inputName = new Scanner(System.in);

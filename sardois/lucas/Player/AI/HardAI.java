@@ -7,10 +7,19 @@ import sardois.lucas.Core.CoordShoot;
 import sardois.lucas.Core.ShootState;
 import sardois.lucas.Player.Player;
 
+/**
+ * This AI shoot at random places but never twice on the same and when 
+ * it touch a ship it will try to destroy it before shooting anywhere else
+ * @author Lucas
+ *
+ */
 public class HardAI extends AIPlayer {
 	
 	private ArrayList<Coord> huntShoot;
 
+	/**
+	 * Construct a hard AI
+	 */
 	public HardAI() {
 		super("Hard AI");
 		huntShoot = new ArrayList<Coord>();

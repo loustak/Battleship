@@ -4,8 +4,18 @@ package sardois.lucas.Game;
 import sardois.lucas.Player.Player;
 import sardois.lucas.Player.AI.AIPlayer;
 
+/**
+ * A game between AI (and only AI)
+ * @author Lucas
+ *
+ */
 public class GameAI extends Game {
 
+	/**
+	 * 
+	 * @param firstPlayer the AI to start the game
+	 * @param secondPlayer the second AI
+	 */
 	public GameAI(AIPlayer firstPlayer, AIPlayer secondPlayer) {
 		super(firstPlayer, secondPlayer);
 	}
@@ -27,6 +37,7 @@ public class GameAI extends Game {
 			
 			if (ennemyPlayer.lost()) {
 				winner = currentPlayer;
+				loser = ennemyPlayer;
 			}
 			
 			nextTurn();
