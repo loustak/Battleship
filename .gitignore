@@ -1,9 +1,0 @@
-.git
-
-*.class
-
-.classpath
-.gitignore
-.project
-ai_proof.csv
-Readme.md
