@@ -3,9 +3,9 @@ package sardois.lucas.Battleship.Game;
 import sardois.lucas.Battleship.Core.CoordShoot;
 import sardois.lucas.Battleship.Player.Player;
 
-public class GameHuman extends Game {
+public class GameUI extends Game {
 
-	public GameHuman(Player firstPlayer, Player secondPlayer) {
+	public GameUI(Player firstPlayer, Player secondPlayer) {
 		super(firstPlayer, secondPlayer);
 	}
 

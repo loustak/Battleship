@@ -40,6 +40,7 @@ public class TestIA {
 			} catch (IOException exception) {
 				System.out.println("Can't write file \"" + fileName + "\": " + exception);
 			}
+			System.out.println("File saved as " + fileName);
 		}
 	}
 

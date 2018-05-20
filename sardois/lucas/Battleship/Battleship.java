@@ -2,14 +2,14 @@ package sardois.lucas.Battleship;
 
 import java.util.Scanner;
 
-import sardois.lucas.Battleship.Game.GameHuman;
+import sardois.lucas.Battleship.Game.GameUI;
 import sardois.lucas.Battleship.Player.HumanPlayer;
 import sardois.lucas.Battleship.Player.Player;
 import sardois.lucas.Battleship.Player.AI.BeginnerAI;
 import sardois.lucas.Battleship.Player.AI.HardAI;
 import sardois.lucas.Battleship.Player.AI.MediumAI;
 
-class Main {
+class Battleship {
 
     public static void main(String[] args) {
     	Scanner inputNumber = new Scanner(System.in);
@@ -26,7 +26,7 @@ class Main {
     	System.out.println("5. Quit");
     	
     	System.out.print("Choose an option (a number): ");
-    	int choice = Main.getNumber(inputNumber, 1, 5);
+    	int choice = Battleship.getNumber(inputNumber, 1, 5);
     	
     	switch (choice) {
     		case 1:
@@ -55,7 +55,7 @@ class Main {
     	}
 
     	if (choice != 5) {
-    		GameHuman game = new GameHuman(player1, player2);
+    		GameUI game = new GameUI(player1, player2);
         	boolean playAgain = true;
         	
         	while (playAgain) {
@@ -66,7 +66,7 @@ class Main {
         		System.out.println("2. No");
         		System.out.print("Choose an option (a number): ");
         		
-        		if (Main.getNumber(inputNumber, 1, 2) == 2) {
+        		if (Battleship.getNumber(inputNumber, 1, 2) == 2) {
         			playAgain = false;
         		} else {
         			game.reset();
