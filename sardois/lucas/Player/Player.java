@@ -1,12 +1,12 @@
-
-package sardois.lucas.Battleship.Player;
+package sardois.lucas.Player;
 
 import java.util.ArrayList;
 
-import sardois.lucas.Battleship.Core.Coord;
-import sardois.lucas.Battleship.Core.Ship;
-import sardois.lucas.Battleship.Core.CoordShoot;
-import sardois.lucas.Battleship.Core.ShootState;
+import sardois.lucas.Core.Coord;
+import sardois.lucas.Core.CoordShoot;
+import sardois.lucas.Core.Ship;
+import sardois.lucas.Core.ShootState;
+
 
 public abstract class Player {
 

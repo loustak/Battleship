@@ -1,6 +1,6 @@
-package sardois.lucas.Battleship.Game;
+package sardois.lucas.Game;
 
-import sardois.lucas.Battleship.Player.Player;
+import sardois.lucas.Player.Player;
 
 public abstract class Game {
 

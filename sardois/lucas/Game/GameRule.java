@@ -1,4 +1,5 @@
-package sardois.lucas.Battleship.Game;
+
+package sardois.lucas.Game;
 
 public final class GameRule {
 	

@@ -1,15 +1,15 @@
-package sardois.lucas.Battleship;
+package sardois.lucas;
 
 import java.util.Scanner;
 
-import sardois.lucas.Battleship.Game.GameUI;
-import sardois.lucas.Battleship.Player.HumanPlayer;
-import sardois.lucas.Battleship.Player.Player;
-import sardois.lucas.Battleship.Player.AI.BeginnerAI;
-import sardois.lucas.Battleship.Player.AI.HardAI;
-import sardois.lucas.Battleship.Player.AI.MediumAI;
+import sardois.lucas.Player.AI.BeginnerAI;
+import sardois.lucas.Player.AI.HardAI;
+import sardois.lucas.Player.AI.MediumAI;
+import sardois.lucas.Game.GameUI;
+import sardois.lucas.Player.HumanPlayer;
+import sardois.lucas.Player.Player;
 
-class Battleship {
+public class Battleship {
 
     public static void main(String[] args) {
     	Scanner inputNumber = new Scanner(System.in);

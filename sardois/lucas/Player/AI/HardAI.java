@@ -1,11 +1,11 @@
-package sardois.lucas.Battleship.Player.AI;
+package sardois.lucas.Player.AI;
 
 import java.util.ArrayList;
 
-import sardois.lucas.Battleship.Core.Coord;
-import sardois.lucas.Battleship.Core.CoordShoot;
-import sardois.lucas.Battleship.Core.ShootState;
-import sardois.lucas.Battleship.Player.Player;
+import sardois.lucas.Core.Coord;
+import sardois.lucas.Core.CoordShoot;
+import sardois.lucas.Core.ShootState;
+import sardois.lucas.Player.Player;
 
 public class HardAI extends AIPlayer {
 	

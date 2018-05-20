@@ -1,4 +1,4 @@
-package sardois.lucas.Battleship.Core;
+package sardois.lucas.Core;
 
 public enum ShootState {
 	NOT_SHOOT,

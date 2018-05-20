@@ -1,4 +1,4 @@
-package sardois.lucas.Battleship.Core;
+package sardois.lucas.Core;
 
 public class CoordShoot extends Coord {
 	

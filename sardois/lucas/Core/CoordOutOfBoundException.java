@@ -1,5 +1,4 @@
-package sardois.lucas.Battleship.Core;
-
+package sardois.lucas.Core;
 
 class CoordOutOfBoundException extends RuntimeException {
 

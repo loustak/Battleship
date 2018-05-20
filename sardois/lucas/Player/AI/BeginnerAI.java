@@ -1,8 +1,8 @@
-package sardois.lucas.Battleship.Player.AI;
+package sardois.lucas.Player.AI;
 
-import sardois.lucas.Battleship.Core.Coord;
-import sardois.lucas.Battleship.Core.CoordShoot;
-import sardois.lucas.Battleship.Player.Player;
+import sardois.lucas.Core.Coord;
+import sardois.lucas.Core.CoordShoot;
+import sardois.lucas.Player.Player;
 
 public class BeginnerAI extends AIPlayer {
 

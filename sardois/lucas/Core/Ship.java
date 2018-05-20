@@ -1,4 +1,4 @@
-package sardois.lucas.Battleship.Core;
+package sardois.lucas.Core;
 
 /**
  * A ship is an array of coordinates

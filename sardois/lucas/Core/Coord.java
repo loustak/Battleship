@@ -1,7 +1,6 @@
+package sardois.lucas.Core;
 
-package sardois.lucas.Battleship.Core;
-
-import sardois.lucas.Battleship.Game.GameRule;
+import sardois.lucas.Game.GameRule;
 import sardois.lucas.Util.Util;
 
 public class Coord {

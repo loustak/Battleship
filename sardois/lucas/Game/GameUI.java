@@ -1,7 +1,7 @@
-package sardois.lucas.Battleship.Game;
+package sardois.lucas.Game;
 
-import sardois.lucas.Battleship.Core.CoordShoot;
-import sardois.lucas.Battleship.Player.Player;
+import sardois.lucas.Core.CoordShoot;
+import sardois.lucas.Player.Player;
 
 public class GameUI extends Game {
 

@@ -1,9 +1,9 @@
-package sardois.lucas.Battleship.Player.AI;
+package sardois.lucas.Player.AI;
 
-import sardois.lucas.Battleship.Core.Coord;
-import sardois.lucas.Battleship.Core.Ship;
-import sardois.lucas.Battleship.Core.ShipCollideException;
-import sardois.lucas.Battleship.Player.Player;
+import sardois.lucas.Core.Coord;
+import sardois.lucas.Core.Ship;
+import sardois.lucas.Core.ShipCollideException;
+import sardois.lucas.Player.Player;
 import sardois.lucas.Util.Util;
 
 public abstract class AIPlayer extends Player {

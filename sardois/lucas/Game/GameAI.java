@@ -1,7 +1,8 @@
-package sardois.lucas.Battleship.Game;
 
-import sardois.lucas.Battleship.Player.Player;
-import sardois.lucas.Battleship.Player.AI.AIPlayer;
+package sardois.lucas.Game;
+
+import sardois.lucas.Player.Player;
+import sardois.lucas.Player.AI.AIPlayer;
 
 public class GameAI extends Game {
 
